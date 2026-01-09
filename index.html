@@ -47,6 +47,13 @@
       --tab-pad: 7px;
       --tab-w: 176px;
       --tab-gap: 6px;
+
+      /* WOW add-ons */
+      --ring: 0 0 0 1px rgba(255,255,255,.08) inset;
+      --ring2: 0 0 0 1px rgba(255,255,255,.12) inset;
+      --softBorder: rgba(255,255,255,.12);
+      --softBg: rgba(255,255,255,.055);
+      --softBg2: rgba(255,255,255,.07);
     }
 
     *{ box-sizing: border-box; }
@@ -64,7 +71,7 @@
     }
     a{ color: inherit; }
 
-    /* Missing but used by #demo-sites */
+    /* container used by demo-sites & any future blocks */
     .container{
       width:100%;
       max-width: var(--max);
@@ -75,6 +82,7 @@
       .container{ padding:0 16px; }
     }
 
+    /* Background layers */
     .aurora{
       position:fixed;
       inset:-35%;
@@ -139,12 +147,28 @@
       .glow{ display:none !important; }
     }
 
+    /* WOW: scroll progress */
+    .progress{
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 2px;
+      width: 0%;
+      z-index: 999;
+      background: linear-gradient(90deg, var(--k-accent), var(--k-accent2));
+      box-shadow: 0 0 0 1px rgba(255,255,255,.06), 0 12px 44px rgba(37,99,235,.20);
+      transform-origin: 0 50%;
+      transition: width .12s linear;
+    }
+
+    /* Layout */
     .wrap{
       max-width: var(--max);
       margin:0 auto;
       padding: calc(72px + var(--safeTop)) 24px calc(160px + var(--safeBottom));
     }
 
+    /* Sticky topbar */
     .topbarSticky{
       position: sticky;
       top: 0;
@@ -244,14 +268,15 @@
       cursor:pointer;
       font-weight: 760;
       font-size: 12px;
-      transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+      transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
       user-select:none;
       white-space: nowrap;
       display:inline-flex;
       align-items:center;
       gap:10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.10);
     }
-    .btn:hover{ transform: translateY(-1px); background: var(--btnHover); border-color: rgba(255,255,255,.24); }
+    .btn:hover{ transform: translateY(-1px); background: var(--btnHover); border-color: rgba(255,255,255,.24); box-shadow: 0 18px 55px rgba(0,0,0,.22); }
     .btn.primary{
       border-color: rgba(255,255,255,0);
       background: linear-gradient(135deg, rgba(37,99,235,.95), rgba(124,58,237,.95));
@@ -273,6 +298,7 @@
       letter-spacing: .02em;
     }
 
+    /* Card system */
     .card{
       border-radius: var(--radius);
       background: linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,.06));
@@ -293,6 +319,23 @@
       pointer-events:none;
     }
 
+    /* WOW: section edge glow & consistent rhythm */
+    .section{
+      margin-top: 26px;
+      padding: 24px;
+    }
+    .section::after{
+      content:"";
+      position:absolute;
+      inset:auto 16px -1px 16px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+      opacity: .55;
+      pointer-events:none;
+      z-index: 0;
+    }
+
+    /* Hero */
     .hero{
       display:grid;
       grid-template-columns: 1.25fr .75fr;
@@ -376,6 +419,7 @@
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
+      box-shadow: var(--ring);
     }
     .mini b{
       display:block;
@@ -392,6 +436,7 @@
       line-height: 1.55;
     }
 
+    /* Tabs */
     .switcher{ margin-top: 18px; display:flex; justify-content:flex-start; }
 
     .tabs{
@@ -479,6 +524,7 @@
       color: rgba(0,0,0,.56);
     }
 
+    /* Panel */
     .panel{ margin-top: 18px; padding: 20px; }
     .panel::before{
       content:"";
@@ -525,6 +571,7 @@
       z-index:1;
     }
 
+    /* Prompts */
     .promptRow{
       margin-top: 14px;
       display:flex;
@@ -542,12 +589,18 @@
       cursor:pointer;
       font-weight: 820;
       font-size: 12px;
-      transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+      transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
       white-space: nowrap;
+      box-shadow: var(--ring);
     }
-    .prompt:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.24); }
+    .prompt:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.09);
+      border-color: rgba(255,255,255,.24);
+      box-shadow: var(--ring2);
+    }
 
-    .section{ margin-top: 26px; padding: 24px; }
+    /* Section header */
     .sectionHead{
       display:flex;
       align-items: flex-end;
@@ -560,6 +613,7 @@
     .sectionHead h2{ margin:0; font-size: 20px; font-weight: 920; letter-spacing: -.02em; }
     .sectionHead p{ margin:0; color: var(--muted); font-size: 13px; line-height: 1.6; max-width: 76ch; }
 
+    /* Grids */
     .grid3{
       position: relative;
       z-index: 1;
@@ -579,6 +633,13 @@
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
+      box-shadow: var(--ring);
+      transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+    }
+    .box:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.075);
+      border-color: rgba(255,255,255,.22);
     }
     .box h3{
       margin:0 0 8px;
@@ -608,6 +669,7 @@
       flex: 0 0 auto;
     }
 
+    /* Logos */
     .logoStrip{
       position: relative;
       z-index: 1;
@@ -632,8 +694,16 @@
       overflow:hidden;
       text-overflow: ellipsis;
       padding: 0 10px;
+      box-shadow: var(--ring);
+      transition: transform .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease);
+    }
+    .logoTile:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,.20);
+      background: rgba(255,255,255,.06);
     }
 
+    /* Table */
     .tableWrap{
       position: relative;
       z-index: 1;
@@ -641,6 +711,7 @@
       border: 1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
       overflow:hidden;
+      box-shadow: var(--ring);
     }
     table{
       width: 100%;
@@ -672,6 +743,7 @@
       font-weight: 920;
     }
 
+    /* Steps */
     .steps{
       position: relative;
       z-index:1;
@@ -694,6 +766,7 @@
       margin-bottom: 10px;
     }
 
+    /* Quotes */
     .quote{
       display:flex;
       flex-direction: column;
@@ -723,6 +796,7 @@
       clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
     }
 
+    /* FAQ */
     .faq{
       position: relative;
       z-index:1;
@@ -736,6 +810,7 @@
       background: rgba(255,255,255,.06);
       overflow:hidden;
       transition: border-color .35s var(--ease), background .35s var(--ease);
+      box-shadow: var(--ring);
     }
     details:hover{ border-color: rgba(255,255,255,.22); background: rgba(255,255,255,.075); }
     summary{
@@ -767,6 +842,7 @@
     }
     details[open] .chev{ transform: rotate(180deg); opacity: 1; }
 
+    /* CTA */
     .cta{
       margin-top: 26px;
       padding: 24px;
@@ -774,6 +850,16 @@
       align-items:center;
       justify-content: space-between;
       gap: 14px;
+    }
+    .cta::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(620px 320px at 20% 30%, color-mix(in srgb, var(--k-accent) 26%, transparent), transparent 62%),
+        radial-gradient(620px 320px at 85% 70%, color-mix(in srgb, var(--k-accent2) 22%, transparent), transparent 60%);
+      opacity:.9;
+      pointer-events:none;
     }
     .cta h2{ margin:0; font-size: 20px; font-weight: 980; letter-spacing: -.02em; }
     .cta p{ margin: 6px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; max-width: 78ch; }
@@ -792,9 +878,13 @@
       font-size: 12px;
       transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
       white-space: nowrap;
+      box-shadow: var(--ring);
+      position: relative;
+      z-index: 1;
     }
     .mail:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.22); }
 
+    /* Footer */
     footer{
       margin-top: 28px;
       padding: 18px 6px 0;
@@ -816,6 +906,7 @@
     }
     .footerLinks a:hover{ color: rgba(255,255,255,.88); border-color: rgba(255,255,255,.35); }
 
+    /* Sticky CTA */
     .stickyCTA{
       position: fixed;
       left: 16px;
@@ -870,9 +961,11 @@
       font-weight: 900;
     }
 
+    /* Reveal */
     .reveal{ opacity: 0; transform: translateY(12px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
     .reveal.on{ opacity: 1; transform: translateY(0); }
 
+    /* Responsive */
     @media (max-width: 980px){
       .hero{ grid-template-columns: 1fr; }
       .actions{ justify-content: flex-start; }
@@ -896,14 +989,13 @@
       .tabs .pill{ width: calc((100% - (var(--tab-pad) * 2) - (var(--tab-gap) * 2)) / 3); }
       .topbar{ padding: 0 16px; }
     }
-
     @media (prefers-reduced-motion: reduce){
       .reveal, .tabs .pill, .btn, .chip, .prompt, .mail{ transition: none !important; }
       .stickyCTA{ transition:none !important; }
     }
   </style>
 
-  <!-- Kontaktio widget theming (KEEP) -->
+  <!-- Kontaktio widget theming (KEEP; backend/script unchanged) -->
   <style>
     :root {
       --k-accent: #2563eb;
@@ -960,11 +1052,7 @@
       animation: kontaktioAurora 7s ease-in-out infinite;
       pointer-events: none;
     }
-    .kontaktio-launcher > div {
-      position: relative;
-      z-index: 2;
-      font-size: 22px;
-    }
+    .kontaktio-launcher > div { position: relative; z-index: 2; font-size: 22px; }
 
     .kontaktio-widget {
       border-radius: 22px !important;
@@ -1063,38 +1151,18 @@
     }
   </style>
 
-  <!-- FIX + WOW: demo-sites in the same glass style (without changing your copy) -->
+  <!-- WOW: demo-sites fixed + fully i18n + visually consistent -->
   <style>
-    /* We keep your #demo-sites content but make it visually consistent */
-    #demo-sites{
-      margin-top: 26px;
-    }
-    #demo-sites .section-title{
-      margin:0;
-      font-size: 20px;
-      font-weight: 920;
-      letter-spacing: -.02em;
-    }
-    #demo-sites .section-subtitle{
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-      max-width: 76ch;
-    }
-
-    /* Wrap: same rhythm as other sections */
-    #demo-sites .demo-grid{
+    #demo-sites .demoGrid{
       position: relative;
-      z-index: 1;
+      z-index:1;
       display:grid;
       grid-template-columns: 1fr;
       gap: 14px;
       margin-top: 14px;
     }
 
-    /* The card is glass now, not flat dark */
-    #demo-sites .demo-card{
+    #demo-sites .demoCard{
       display:block;
       padding: 18px;
       border-radius: 18px;
@@ -1102,12 +1170,12 @@
       background: rgba(255,255,255,.06);
       text-decoration:none;
       color: inherit;
-      transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+      transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
       position: relative;
       overflow:hidden;
-      box-shadow: 0 16px 60px rgba(0,0,0,.22);
+      box-shadow: 0 16px 60px rgba(0,0,0,.22), var(--ring);
     }
-    #demo-sites .demo-card::before{
+    #demo-sites .demoCard::before{
       content:"";
       position:absolute;
       inset:-2px;
@@ -1118,13 +1186,14 @@
       pointer-events:none;
       opacity: .95;
     }
-    #demo-sites .demo-card:hover{
+    #demo-sites .demoCard:hover{
       transform: translateY(-2px);
       background: rgba(255,255,255,.075);
       border-color: rgba(255,255,255,.22);
+      box-shadow: 0 26px 92px rgba(0,0,0,.36), var(--ring2);
     }
 
-    #demo-sites .demo-card-inner{
+    #demo-sites .demoCardInner{
       position: relative;
       z-index: 1;
       display:flex;
@@ -1132,24 +1201,24 @@
       justify-content: space-between;
       gap: 16px;
     }
-    #demo-sites .demo-card-copy{
+    #demo-sites .demoCardCopy{
       min-width: 0;
+      max-width: 78ch;
     }
-    #demo-sites .demo-card-inner h3{
+    #demo-sites .demoCardInner h3{
       margin: 0 0 8px;
       font-size: 16px;
       font-weight: 920;
       letter-spacing: -.01em;
       color: rgba(255,255,255,.92);
     }
-    #demo-sites .demo-card-inner p{
+    #demo-sites .demoCardInner p{
       margin: 0;
       font-size: 13px;
       color: rgba(255,255,255,.66);
       line-height: 1.65;
-      max-width: 78ch;
     }
-    #demo-sites .demo-cta{
+    #demo-sites .demoCta{
       display:inline-flex;
       align-items:center;
       gap: 10px;
@@ -1163,15 +1232,16 @@
       padding: 9px 12px;
       transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
       white-space: nowrap;
+      box-shadow: var(--ring);
     }
-    #demo-sites .demo-card:hover .demo-cta{
+    #demo-sites .demoCard:hover .demoCta{
       transform: translateY(-1px);
       background: rgba(255,255,255,.085);
       border-color: rgba(255,255,255,.22);
     }
 
-    /* WOW: small “preview strip” – visual only (no new marketing copy) */
-    #demo-sites .demo-preview{
+    /* Visual preview panel */
+    #demo-sites .demoPreview{
       flex: 0 0 260px;
       width: 260px;
       height: 120px;
@@ -1183,14 +1253,13 @@
         linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
       position: relative;
       overflow:hidden;
-      box-shadow: 0 18px 60px rgba(0,0,0,.20);
+      box-shadow: 0 18px 60px rgba(0,0,0,.20), var(--ring);
     }
-    #demo-sites .demo-preview::after{
+    #demo-sites .demoPreview::after{
       content:"";
       position:absolute;
       inset: 0;
-      background:
-        linear-gradient(90deg, rgba(255,255,255,.10), rgba(255,255,255,0), rgba(255,255,255,.08));
+      background: linear-gradient(90deg, rgba(255,255,255,.10), rgba(255,255,255,0), rgba(255,255,255,.08));
       transform: translateX(-45%);
       opacity: .85;
       animation: demoShine 3.2s var(--ease) infinite;
@@ -1202,7 +1271,7 @@
       60%{ opacity: .35; }
       100%{ transform: translateX(55%); opacity: 0; }
     }
-    #demo-sites .demo-preview .bars{
+    #demo-sites .demoPreview .bars{
       position:absolute;
       left: 14px;
       right: 14px;
@@ -1211,27 +1280,29 @@
       gap: 8px;
       opacity: .9;
     }
-    #demo-sites .demo-preview .bar{
+    #demo-sites .demoPreview .bar{
       height: 10px;
       border-radius: 999px;
       background: rgba(255,255,255,.14);
       border: 1px solid rgba(255,255,255,.12);
     }
-    #demo-sites .demo-preview .bar:nth-child(1){ width: 54%; }
-    #demo-sites .demo-preview .bar:nth-child(2){ width: 36%; }
-    #demo-sites .demo-preview .bar:nth-child(3){ width: 22%; }
+    #demo-sites .demoPreview .bar:nth-child(1){ width: 54%; }
+    #demo-sites .demoPreview .bar:nth-child(2){ width: 36%; }
+    #demo-sites .demoPreview .bar:nth-child(3){ width: 22%; }
 
     @media (max-width: 720px){
-      #demo-sites .demo-card-inner{ flex-direction:column; }
-      #demo-sites .demo-preview{ width: 100%; flex-basis: auto; }
+      #demo-sites .demoCardInner{ flex-direction:column; }
+      #demo-sites .demoPreview{ width: 100%; flex-basis: auto; }
     }
     @media (prefers-reduced-motion: reduce){
-      #demo-sites .demo-preview::after{ animation:none !important; }
+      #demo-sites .demoPreview::after{ animation:none !important; }
     }
   </style>
 </head>
 
 <body>
+  <div class="progress" id="progress"></div>
+
   <div class="aurora"></div>
   <div class="noise"></div>
   <div class="glow" id="glow"></div>
@@ -1331,6 +1402,7 @@
       </aside>
     </section>
 
+    <!-- DEMO PANEL -->
     <section class="card panel reveal" data-reveal>
       <div class="panelTop">
         <div>
@@ -1357,27 +1429,25 @@
       <div class="divider"></div>
     </section>
 
-    <!-- FIXED + WOW: demo-sites as a consistent glass section -->
+    <!-- DEMO SITES (FIXED + i18n) -->
     <section id="demo-sites" class="card section reveal" data-reveal>
       <div class="sectionHead">
         <div>
-          <h2 class="section-title">Zobacz, jak może wyglądać Twoja strona</h2>
-          <p class="section-subtitle">
-            Przygotowałem gotowe przykłady stron dla różnych branż. Każda z nich działa z Twoim własnym asystentem AI.
-          </p>
+          <h2 data-i18n="demoSites.title">Zobacz, jak może wyglądać Twoja strona</h2>
+          <p data-i18n="demoSites.sub">Przygotowałem gotowe przykłady stron dla różnych branż. Każda z nich działa z Twoim własnym asystentem AI.</p>
         </div>
       </div>
 
-      <div class="demo-grid">
-        <a href="branze.html" class="demo-card">
-          <div class="demo-card-inner">
-            <div class="demo-card-copy">
-              <h3>Przykładowe realizacje</h3>
-              <p>Strony dla salonów, restauracji, hoteli, trenerów, usług i wielu innych.</p>
-              <span class="demo-cta">Zobacz wszystkie branże →</span>
+      <div class="demoGrid">
+        <a href="branze.html" class="demoCard" aria-label="Przykładowe realizacje">
+          <div class="demoCardInner">
+            <div class="demoCardCopy">
+              <h3 data-i18n="demoSites.cardTitle">Przykładowe realizacje</h3>
+              <p data-i18n="demoSites.cardDesc">Strony dla salonów, restauracji, hoteli, trenerów, usług i wielu innych.</p>
+              <span class="demoCta" data-i18n="demoSites.cta">Zobacz wszystkie branże →</span>
             </div>
 
-            <div class="demo-preview" aria-hidden="true">
+            <div class="demoPreview" aria-hidden="true">
               <div class="bars">
                 <div class="bar"></div>
                 <div class="bar"></div>
@@ -1389,6 +1459,7 @@
       </div>
     </section>
 
+    <!-- LOGOS -->
     <section class="card section reveal" data-reveal>
       <div class="sectionHead">
         <div>
@@ -1407,6 +1478,7 @@
       </div>
     </section>
 
+    <!-- WHY -->
     <section class="card section reveal" data-reveal id="how">
       <div class="sectionHead">
         <div>
@@ -1431,6 +1503,7 @@
       </div>
     </section>
 
+    <!-- COMPARISON -->
     <section class="card section reveal" data-reveal>
       <div class="sectionHead">
         <div>
@@ -1474,6 +1547,7 @@
       </div>
     </section>
 
+    <!-- BENEFITS -->
     <section class="card section reveal" data-reveal>
       <div class="sectionHead">
         <div>
@@ -1510,6 +1584,7 @@
       </div>
     </section>
 
+    <!-- ONBOARDING -->
     <section class="card section reveal" data-reveal>
       <div class="sectionHead">
         <div>
@@ -1537,11 +1612,12 @@
       </div>
     </section>
 
+    <!-- TESTIMONIALS -->
     <section class="card section reveal" data-reveal>
       <div class="sectionHead">
         <div>
           <h2 data-i18n="testi.title">Jak to jest odbierane</h2>
-          <p data-i18n="testi.sub">To są przykłady tego “uczucia”, o które Ci chodzi: klient widzi, że firma ma proces i poziom.</p>
+          <p data-i18n="testi.sub">To są przykłady tego “uczucia”: klient widzi, że firma ma proces i poziom.</p>
         </div>
       </div>
 
@@ -1564,6 +1640,7 @@
       </div>
     </section>
 
+    <!-- FAQ -->
     <section class="card section reveal" data-reveal>
       <div class="sectionHead">
         <div>
@@ -1633,14 +1710,15 @@
       </div>
     </section>
 
+    <!-- CTA -->
     <section class="card cta reveal" data-reveal id="contact">
-      <div>
+      <div style="position:relative; z-index:1;">
         <h2 data-i18n="cta.title">Chcesz wersję dla swojej firmy?</h2>
         <p data-i18n="cta.sub">
           Napisz, jaką branżę prowadzisz i jakie pytania klienci zadają najczęściej. Odeślemy propozycję wersji demo pod Twoją stronę.
         </p>
       </div>
-      <div class="ctaRight">
+      <div class="ctaRight" style="position:relative; z-index:1;">
         <a class="mail" href="mailto:kontaktio@zohomail.eu">kontaktio@zohomail.eu</a>
         <button class="btn primary" id="btnOpenCta" type="button" data-i18n="cta.open">Otwórz asystenta</button>
       </div>
@@ -1709,6 +1787,12 @@
         "agent.amico": "Styl przyjazny i konkretny. Dobry do firm usługowych, gdzie liczy się szybka odpowiedź i kontakt.",
         "agent.demo": "Uniwersalny styl do pokazywania możliwości. Dobry balans między szczegółem a zwięzłością.",
         "agent.premium": "Spokojny, elegancki ton. Dla firm, które chcą bardzo dopracowanej obsługi.",
+
+        "demoSites.title": "Zobacz, jak może wyglądać Twoja strona",
+        "demoSites.sub": "Przygotowałem gotowe przykłady stron dla różnych branż. Każda z nich działa z Twoim własnym asystentem AI.",
+        "demoSites.cardTitle": "Przykładowe realizacje",
+        "demoSites.cardDesc": "Strony dla salonów, restauracji, hoteli, trenerów, usług i wielu innych.",
+        "demoSites.cta": "Zobacz wszystkie branże →",
 
         "logos.title": "Brzmi znajomo? To są realne branże.",
         "logos.sub": "Te typy firm mają masę powtarzalnych pytań. Asystent przejmuje je natychmiast, zanim klient wyjdzie ze strony.",
@@ -1833,6 +1917,12 @@
         "agent.amico": "Friendly and direct. Great for local services where speed and clarity matter.",
         "agent.demo": "Balanced and universal to showcase capabilities. Detailed but still concise.",
         "agent.premium": "Calm, elegant tone. For brands that want a refined experience.",
+
+        "demoSites.title": "See what your website could look like",
+        "demoSites.sub": "I’ve prepared ready-made website examples for different industries. Each one works with your own AI assistant.",
+        "demoSites.cardTitle": "Example implementations",
+        "demoSites.cardDesc": "Websites for salons, restaurants, hotels, trainers, service businesses and more.",
+        "demoSites.cta": "View all industries →",
 
         "logos.title": "Recognize this? These are real industries.",
         "logos.sub": "They get the same repetitive questions. The assistant handles them instantly before visitors leave.",
@@ -2159,6 +2249,20 @@
         bar.classList.remove("on");
         try { localStorage.setItem(key, "1"); } catch {}
       });
+    })();
+
+    /* WOW: scroll progress */
+    (function progress(){
+      const el = $("progress");
+      if (!el) return;
+      function onScroll(){
+        const doc = document.documentElement;
+        const max = (doc.scrollHeight - doc.clientHeight) || 1;
+        const p = Math.max(0, Math.min(1, (doc.scrollTop || window.scrollY || 0) / max));
+        el.style.width = (p * 100).toFixed(2) + "%";
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
     })();
 
     $("btnClear").addEventListener("click", () => {
