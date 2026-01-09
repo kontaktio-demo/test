@@ -2,199 +2,288 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <title>Test klienta – Kontaktio</title>
+  <title>Kontaktio – Przykładowe branże</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Zobacz przykładowe strony dla różnych branż – każda z działającym asystentem AI od Kontaktio." />
   <style>
+    /* Reset & base */
+    * { box-sizing: border-box; }
+    html,body { margin:0; padding:0; }
     body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      background: #f5f5f5;
-      color: #222;
-      line-height: 1.6;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: #ffffff;
+      color: #111;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
     }
-    h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
+    a { color: inherit; text-decoration: none; }
+    .container { max-width:1100px; margin:0 auto; padding:0 20px; }
+
+    /* Sections */
+    section { padding: 80px 0; }
+
+    /* Hero (match main site look & feel) */
+    .hero {
+      padding: 100px 0 60px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(250,250,250,1) 0%, rgba(245,245,245,1) 100%);
     }
-    p {
-      max-width: 600px;
+    .hero h1 {
+      font-family: "Playfair Display", serif;
+      font-size: 44px;
+      margin: 0 0 12px;
+      letter-spacing: -0.02em;
+      color: #111;
     }
-    .box {
-      margin-top: 30px;
-      padding: 20px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      max-width: 600px;
+    .hero p.lead {
+      margin: 0 auto;
+      max-width: 760px;
+      color: #555;
+      font-size: 18px;
+    }
+    .hero .hero-cta {
+      margin-top: 26px;
+      display:inline-block;
+      padding:12px 22px;
+      border-radius:10px;
+      background: linear-gradient(135deg,#b88b44,#d3b27a);
+      color:#fff;
+      font-weight:600;
+      box-shadow: 0 12px 30px rgba(131,94,39,0.18);
+    }
+
+    /* Grid of industry cards */
+    .industries {
+      padding: 48px 0 0;
+    }
+    .industries-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      margin-top: 28px;
+    }
+
+    .industry-card {
+      background: #fdf9f4;
+      border: 1px solid rgba(153,129,89,0.18);
+      border-radius: 14px;
+      padding: 22px;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      box-shadow: 0 12px 36px rgba(158,132,93,0.06);
+      display:flex;
+      flex-direction:column;
+      min-height:140px;
+    }
+    .industry-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 48px rgba(158,132,93,0.12);
+      border-color: rgba(153,129,89,0.28);
+    }
+    .industry-card h3 {
+      font-family: "Playfair Display", serif;
+      font-size: 20px;
+      margin: 0 0 8px;
+      color: #3b2f21;
+    }
+    .industry-card p {
+      margin: 0;
+      color: #6d6154;
+      flex:1;
+    }
+    .industry-card .card-foot {
+      margin-top: 14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .industry-card .demo-link {
+      font-weight:600;
+      color:#b88b44;
+    }
+    .industry-card .badge {
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(184,139,68,0.08);
+      color:#5c4a33;
+      border:1px solid rgba(184,139,68,0.12);
+    }
+
+    /* Featured big card (wow effect) */
+    .featured {
+      display:flex;
+      gap:20px;
+      align-items:stretch;
+      margin-top:36px;
+    }
+    .featured .left {
+      flex:1.2;
+      background: linear-gradient(135deg, #fffaf6, #f6efe7);
+      border-radius: 16px;
+      padding: 28px;
+      border: 1px solid rgba(153,129,89,0.18);
+      box-shadow: 0 20px 60px rgba(158,132,93,0.08);
+    }
+    .featured h3 { margin:0 0 10px; font-size:22px; font-family:"Playfair Display", serif; color:#3b2f21; }
+    .featured p { color:#6d6154; margin:0 0 18px; }
+    .featured .btn {
+      display:inline-block;
+      padding:10px 18px;
+      border-radius:10px;
+      background: linear-gradient(135deg,#b88b44,#d3b27a);
+      color:#fff;
+      font-weight:600;
+    }
+    .featured .right {
+      flex:0.9;
+      display:grid;
+      grid-template-columns: repeat(1,1fr);
+      gap:12px;
+    }
+    .mini-card {
+      background:#fff;
+      border-radius:12px;
+      padding:14px;
+      border:1px solid rgba(153,129,89,0.12);
+      box-shadow: 0 10px 30px rgba(158,132,93,0.06);
+    }
+    .mini-card h4 { margin:0 0 6px; font-size:16px; color:#3b2f21; }
+    .mini-card p { margin:0; color:#6d6154; font-size:14px; }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      text-align:center;
+      color:#777;
+      border-top:1px solid rgba(0,0,0,0.04);
+      margin-top:60px;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 920px) {
+      .featured { flex-direction:column; }
+      .featured .right { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 640px) {
+      .hero h1 { font-size:32px; }
+      .industries-grid { gap:16px; }
+      .industry-card { padding:18px; border-radius:12px; }
+      .featured .left { padding:20px; }
     }
   </style>
 </head>
 <body>
 
-  <h1>Testowa strona klienta</h1>
-  <p>
-    To jest przykładowa strona klienta hostowana na GitHub Pages.
-    Jeśli widzisz w prawym dolnym rogu bąbelek asystenta – integracja działa.
-  </p>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Wybierz branżę</h1>
+      <p class="lead">Każda branża ma przygotowaną przykładową stronę oraz działającego asystenta AI — gotowe demo, które możesz uruchomić jako subdomenę lub osobny projekt.</p>
+      <a class="hero-cta" href="#industries">Zobacz branże</a>
+    </div>
+  </section>
 
-  <div class="box">
-    <strong>Informacja:</strong><br>
-    Ten klient ma własny styl, avatar, quick actions i zachowanie AI,
-    zdefiniowane w <code>clients.json</code> po stronie Kontaktio.
-  </div>
+  <!-- Industries grid -->
+  <section id="industries">
+    <div class="container">
+      <div class="featured" aria-hidden="false">
+        <div class="left">
+          <h3>Jak to działa — szybkie demo w 24h</h3>
+          <p>Wybierz branżę, uruchom demo na subdomenie i zobacz, jak asystent przejmuje powtarzalne pytania klientów. To pełne doświadczenie: strona, asystent i panel administracyjny.</p>
+          <a class="btn" href="mailto:kontakt@kontaktio.pl">Poproś o demo</a>
+        </div>
+        <div class="right">
+          <div class="mini-card">
+            <h4>Hotel / Pensjonat</h4>
+            <p>Rezerwacje, dostępność, FAQ i upsell usług dodatkowych.</p>
+          </div>
+          <div class="mini-card">
+            <h4>Restauracja / Catering</h4>
+            <p>Menu, zamówienia, dostępność terminów i obsługa eventów.</p>
+          </div>
+          <div class="mini-card">
+            <h4>Salon beauty</h4>
+            <p>Rezerwacje, cennik, przypomnienia i cross-sell zabiegów.</p>
+          </div>
+          <div class="mini-card">
+            <h4>Usługi lokalne</h4>
+            <p>Umawianie wizyt, wyceny i szybki kontakt z technikiem.</p>
+          </div>
+        </div>
+      </div>
 
-<!-- Kontaktio – Apple-like WOW embed -->
-<style>
-  /* ===============================
-     Kontaktio WOW (Apple-style)
-     =============================== */
+      <div class="industries-grid" style="margin-top:36px;">
+        <a class="industry-card" href="https://catering.kontaktio.pl" target="_blank" rel="noopener">
+          <h3>Catering / Gastronomia</h3>
+          <p>Strona z menu, ofertą i asystentem AI dla klientów. Demo uruchomione na subdomenie, z pełnym panelem zamówień.</p>
+          <div class="card-foot">
+            <span class="badge">Demo</span>
+            <span class="demo-link">Otwórz demo →</span>
+          </div>
+        </a>
 
-  :root {
-    --k-accent: #2563eb;
-    --k-accent2: #7c3aed;
-    --k-glass: rgba(15, 23, 42, 0.62);
-    --k-glass-soft: rgba(2, 6, 23, 0.28);
-    --k-border: rgba(255, 255, 255, 0.14);
-    --k-text: rgba(255, 255, 255, 0.92);
-    --k-muted: rgba(255, 255, 255, 0.7);
-  }
+        <a class="industry-card" href="#" onclick="alert('Demo w przygotowaniu'); return false;">
+          <h3>Salon kosmetyczny</h3>
+          <p>Rezerwacje, cennik i automatyczna obsługa zapytań — klient rezerwuje termin bez telefonu.</p>
+          <div class="card-foot">
+            <span class="badge">Soon</span>
+            <span class="demo-link">Zobacz →</span>
+          </div>
+        </a>
 
-  /* Launcher */
-  .kontaktio-launcher {
-    width: 60px !important;
-    height: 60px !important;
-    border-radius: 999px !important;
-    background: linear-gradient(135deg, var(--k-accent), var(--k-accent2)) !important;
-    color: #fff !important;
-    border: 1px solid rgba(255,255,255,.22) !important;
-    box-shadow:
-      0 18px 50px rgba(0,0,0,.35),
-      0 0 0 10px rgba(37,99,235,.12),
-      0 0 0 22px rgba(124,58,237,.08) !important;
-    overflow: hidden;
-  }
+        <a class="industry-card" href="#" onclick="alert('Demo w przygotowaniu'); return false;">
+          <h3>Hotel / Apartamenty</h3>
+          <p>Asystent odpowiada na pytania o dostępność, ceny i udogodnienia, integracja z systemem rezerwacji.</p>
+          <div class="card-foot">
+            <span class="badge">Soon</span>
+            <span class="demo-link">Zobacz →</span>
+          </div>
+        </a>
 
-  .kontaktio-launcher::before {
-    content: "";
-    position: absolute;
-    inset: -40%;
-    background:
-      radial-gradient(60% 60% at 30% 30%, rgba(255,255,255,.45), transparent 60%),
-      radial-gradient(60% 60% at 70% 70%, rgba(255,255,255,.18), transparent 62%);
-    filter: blur(6px);
-    animation: kontaktioAurora 7s ease-in-out infinite;
-  }
+        <a class="industry-card" href="#" onclick="alert('Demo w przygotowaniu'); return false;">
+          <h3>Trener personalny</h3>
+          <p>Oferta treningów, plany i automatyczne umawianie sesji — klient otrzymuje plan i przypomnienia.</p>
+          <div class="card-foot">
+            <span class="badge">Soon</span>
+            <span class="demo-link">Zobacz →</span>
+          </div>
+        </a>
 
-  .kontaktio-launcher > div {
-    position: relative;
-    z-index: 2;
-    font-size: 22px;
-  }
+        <a class="industry-card" href="#" onclick="alert('Demo w przygotowaniu'); return false;">
+          <h3>Usługi lokalne</h3>
+          <p>Hydraulik, elektryk, mechanik – szybkie odpowiedzi, wyceny i umawianie wizyt przez chat.</p>
+          <div class="card-foot">
+            <span class="badge">Soon</span>
+            <span class="demo-link">Zobacz →</span>
+          </div>
+        </a>
 
-  /* Widget glass */
-  .kontaktio-widget {
-    border-radius: 22px !important;
-    border: 1px solid var(--k-border) !important;
-    background: var(--k-glass) !important;
-    backdrop-filter: blur(18px) saturate(140%) !important;
-    -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
-    box-shadow:
-      0 28px 90px rgba(0,0,0,.45),
-      0 1px 0 rgba(255,255,255,.06) inset !important;
-    overflow: hidden;
-  }
+        <a class="industry-card" href="#" onclick="alert('Demo w przygotowaniu'); return false;">
+          <h3>E‑commerce</h3>
+          <p>Asystent produktowy, rekomendacje i obsługa klienta — integracja z katalogiem produktów.</p>
+          <div class="card-foot">
+            <span class="badge">Soon</span>
+            <span class="demo-link">Zobacz →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
 
-  .kontaktio-widget::before {
-    content: "";
-    position: absolute;
-    inset: -40px;
-    background:
-      radial-gradient(600px 420px at 20% 10%, rgba(37,99,235,.35), transparent 60%),
-      radial-gradient(520px 420px at 90% 0%, rgba(124,58,237,.30), transparent 58%),
-      radial-gradient(560px 460px at 30% 110%, rgba(16,185,129,.20), transparent 55%);
-    filter: blur(18px);
-    pointer-events: none;
-    animation: kontaktioAurora 9s ease-in-out infinite;
-  }
+  <footer>
+    © Kontaktio – przykładowe wdrożenia
+  </footer>
 
-  /* Header */
-  .kontaktio-header {
-    background: linear-gradient(180deg, rgba(2,6,23,.55), rgba(2,6,23,.18)) !important;
-    color: var(--k-text) !important;
-    border-bottom: 1px solid rgba(255,255,255,.1);
-  }
-
-  .kontaktio-header-sub {
-    color: var(--k-muted) !important;
-  }
-
-  /* Messages */
-  .kontaktio-bubble {
-    border-radius: 16px !important;
-    font-size: 14.5px !important;
-    line-height: 1.45 !important;
-    box-shadow:
-      0 16px 40px rgba(0,0,0,.18),
-      0 1px 0 rgba(255,255,255,.06) inset !important;
-  }
-
-  .kontaktio-row.bot .kontaktio-bubble {
-    background: rgba(255,255,255,.10) !important;
-    color: var(--k-text) !important;
-    border: 1px solid rgba(255,255,255,.12);
-  }
-
-  .kontaktio-row.user .kontaktio-bubble {
-    background: linear-gradient(135deg, var(--k-accent), var(--k-accent2)) !important;
-    color: #fff !important;
-  }
-
-  /* Input */
-  .kontaktio-inputwrap {
-    background: linear-gradient(180deg, rgba(2,6,23,.12), rgba(2,6,23,.28)) !important;
-    border-top: 1px solid rgba(255,255,255,.1);
-  }
-
-  .kontaktio-input {
-    background: rgba(255,255,255,.10) !important;
-    color: var(--k-text) !important;
-    border: 1px solid rgba(255,255,255,.14) !important;
-  }
-
-  .kontaktio-input::placeholder {
-    color: rgba(255,255,255,.55);
-  }
-
-  .kontaktio-send {
-    background: linear-gradient(135deg, var(--k-accent), var(--k-accent2)) !important;
-    color: #fff !important;
-    border: 1px solid rgba(255,255,255,.18);
-  }
-
-  @keyframes kontaktioAurora {
-    0% { transform: translate(0,0) scale(1); }
-    50% { transform: translate(10px,-8px) scale(1.02); }
-    100% { transform: translate(0,0) scale(1); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .kontaktio-widget::before,
-    .kontaktio-launcher::before {
-      animation: none !important;
-    }
-  }
-</style>
-
-<script
-  src="https://cdn.jsdelivr.net/gh/kontaktio-demo/kontaktio@5d9beb0/kontaktio.js"
-  data-kontaktio
-  data-client="SAWO"
-  data-backend="https://chatbot-backend-x2cy.onrender.com"
-></script>
-
-
-
-
-
+  <script>
+    // Small enhancement: smooth scroll for hero CTA
+    document.querySelectorAll('.hero-cta').forEach(btn => {
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        const el = document.querySelector('#industries');
+        if(el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
 </body>
 </html>
