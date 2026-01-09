@@ -2,288 +2,2220 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <title>Kontaktio – Przykładowe branże</title>
+  <title>Kontaktio — Demo asystentów AI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Zobacz przykładowe strony dla różnych branż – każda z działającym asystentem AI od Kontaktio." />
+  <meta name="theme-color" content="#070b18" />
+  <meta name="color-scheme" content="dark light" />
+
   <style>
-    /* Reset & base */
-    * { box-sizing: border-box; }
-    html,body { margin:0; padding:0; }
-    body {
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: #ffffff;
-      color: #111;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.5;
-    }
-    a { color: inherit; text-decoration: none; }
-    .container { max-width:1100px; margin:0 auto; padding:0 20px; }
+    :root{
+      --bg0:#050816;
+      --bg1:#070b1a;
 
-    /* Sections */
-    section { padding: 80px 0; }
+      --glass: rgba(255,255,255,.08);
+      --glass2: rgba(255,255,255,.10);
+      --stroke: rgba(255,255,255,.18);
+      --stroke2: rgba(255,255,255,.24);
 
-    /* Hero (match main site look & feel) */
-    .hero {
-      padding: 100px 0 60px;
-      text-align: center;
-      background: linear-gradient(180deg, rgba(250,250,250,1) 0%, rgba(245,245,245,1) 100%);
-    }
-    .hero h1 {
-      font-family: "Playfair Display", serif;
-      font-size: 44px;
-      margin: 0 0 12px;
-      letter-spacing: -0.02em;
-      color: #111;
-    }
-    .hero p.lead {
-      margin: 0 auto;
-      max-width: 760px;
-      color: #555;
-      font-size: 18px;
-    }
-    .hero .hero-cta {
-      margin-top: 26px;
-      display:inline-block;
-      padding:12px 22px;
-      border-radius:10px;
-      background: linear-gradient(135deg,#b88b44,#d3b27a);
-      color:#fff;
-      font-weight:600;
-      box-shadow: 0 12px 30px rgba(131,94,39,0.18);
+      --txt: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.62);
+      --muted2: rgba(255,255,255,.74);
+
+      --shadow: 0 28px 110px rgba(0,0,0,.50);
+      --shadow2: 0 16px 60px rgba(0,0,0,.34);
+
+      --radius: 28px;
+      --radius2: 18px;
+      --ease: cubic-bezier(.2,.9,.2,1);
+
+      --a1:#7c3aed;
+      --a2:#2563eb;
+      --a3:#22d3ee;
+      --a4:#10b981;
+      --a5:#f59e0b;
+
+      --safeTop: env(safe-area-inset-top, 0px);
+      --safeBottom: env(safe-area-inset-bottom, 0px);
+      --max: 1160px;
+
+      --btn: rgba(255,255,255,.10);
+      --btnHover: rgba(255,255,255,.14);
+      --btnStroke: rgba(255,255,255,.18);
+
+      /* Tabs fixed sizes (NO % / NO language shift) */
+      --tab-h: 48px;
+      --tab-pad: 7px;
+      --tab-w: 176px;
+      --tab-gap: 6px;
     }
 
-    /* Grid of industry cards */
-    .industries {
-      padding: 48px 0 0;
+    *{ box-sizing: border-box; }
+    html,body{ height: 100%; }
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--txt);
+      background:
+        radial-gradient(1200px 900px at 20% 10%, #0b1640 0%, transparent 55%),
+        radial-gradient(900px 700px at 80% 18%, #220b4a 0%, transparent 60%),
+        radial-gradient(900px 600px at 50% 95%, #0a2a2a 0%, transparent 58%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
     }
-    .industries-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 22px;
-      margin-top: 28px;
+    a{ color: inherit; }
+
+    /* Missing but used by #demo-sites */
+    .container{
+      width:100%;
+      max-width: var(--max);
+      margin:0 auto;
+      padding: 0 24px;
+    }
+    @media (max-width: 560px){
+      .container{ padding:0 16px; }
     }
 
-    .industry-card {
-      background: #fdf9f4;
-      border: 1px solid rgba(153,129,89,0.18);
-      border-radius: 14px;
-      padding: 22px;
-      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-      box-shadow: 0 12px 36px rgba(158,132,93,0.06);
+    .aurora{
+      position:fixed;
+      inset:-35%;
+      z-index:-4;
+      filter: blur(96px);
+      transform: translateZ(0);
+      background:
+        radial-gradient(36% 30% at 20% 26%, rgba(124,58,237,.55), transparent 62%),
+        radial-gradient(36% 30% at 82% 20%, rgba(37,99,235,.55), transparent 60%),
+        radial-gradient(32% 30% at 52% 86%, rgba(34,211,238,.50), transparent 62%),
+        radial-gradient(26% 26% at 74% 78%, rgba(16,185,129,.36), transparent 64%),
+        radial-gradient(22% 22% at 18% 78%, rgba(245,158,11,.22), transparent 64%);
+      animation: auroraFloat 16s var(--ease) infinite alternate;
+    }
+    .aurora::after{
+      content:"";
+      position:absolute;
+      inset:-10%;
+      background:
+        radial-gradient(40% 35% at 28% 70%, rgba(37,99,235,.22), transparent 60%),
+        radial-gradient(40% 35% at 74% 28%, rgba(124,58,237,.22), transparent 60%);
+      animation: auroraFloat2 22s var(--ease) infinite alternate;
+      opacity:.95;
+    }
+    @keyframes auroraFloat{
+      from{ transform: translate3d(-1.3%, -1.2%, 0) scale(1.02); }
+      to{ transform: translate3d( 1.2%, 1.4%, 0) scale(1.06); }
+    }
+    @keyframes auroraFloat2{
+      from{ transform: translate3d( 1.0%, -1.4%, 0) scale(1.00); opacity:.85; }
+      to{ transform: translate3d(-1.1%, 1.2%, 0) scale(1.08); opacity:1; }
+    }
+
+    .noise{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-3;
+      opacity:.085;
+      mix-blend-mode: overlay;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
+    }
+
+    .glow{
+      position:fixed;
+      width:780px;
+      height:780px;
+      border-radius:999px;
+      pointer-events:none;
+      z-index:-2;
+      background: radial-gradient(circle at center, rgba(255,255,255,.13), transparent 56%);
+      transform: translate3d(-9999px,-9999px,0);
+      opacity:0;
+      transition: opacity .25s ease;
+    }
+    @media (hover:hover){
+      body:hover .glow{ opacity:1; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .aurora, .aurora::after{ animation:none !important; }
+      .glow{ display:none !important; }
+    }
+
+    .wrap{
+      max-width: var(--max);
+      margin:0 auto;
+      padding: calc(72px + var(--safeTop)) 24px calc(160px + var(--safeBottom));
+    }
+
+    .topbarSticky{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: calc(14px + var(--safeTop)) 0 10px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: linear-gradient(180deg, rgba(5,8,22,.78), rgba(5,8,22,.10));
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .topbar{
       display:flex;
-      flex-direction:column;
-      min-height:140px;
-    }
-    .industry-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 22px 48px rgba(158,132,93,0.12);
-      border-color: rgba(153,129,89,0.28);
-    }
-    .industry-card h3 {
-      font-family: "Playfair Display", serif;
-      font-size: 20px;
-      margin: 0 0 8px;
-      color: #3b2f21;
-    }
-    .industry-card p {
-      margin: 0;
-      color: #6d6154;
-      flex:1;
-    }
-    .industry-card .card-foot {
-      margin-top: 14px;
-      display:flex;
+      align-items:center;
       justify-content:space-between;
+      gap:16px;
+      max-width: var(--max);
+      margin:0 auto;
+      padding: 0 24px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      user-select:none;
+    }
+    .logo{
+      width:38px;
+      height:38px;
+      border-radius: 14px;
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(255,255,255,.95), rgba(255,255,255,.15)),
+        linear-gradient(135deg, rgba(37,99,235,.95), rgba(124,58,237,.95));
+      box-shadow: 0 16px 45px rgba(37,99,235,.20);
+    }
+    .brandText{ line-height:1.05; }
+    .brandText b{
+      display:block;
+      font-size: 14px;
+      letter-spacing:.01em;
+      font-weight:760;
+      color: rgba(255,255,255,.92);
+    }
+    .brandText span{
+      display:block;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .topActions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .lang{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding: 7px;
+      border-radius: 999px;
+      background: var(--glass);
+      border: 1px solid var(--stroke);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .lang button{
+      border:none;
+      background: transparent;
+      cursor:pointer;
+      height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      color: var(--muted2);
+      font-weight: 680;
+      font-size: 12px;
+      letter-spacing:.01em;
+      transition: all .35s var(--ease);
+      white-space: nowrap;
+    }
+    .lang button.active{
+      background: rgba(255,255,255,.92);
+      color: rgba(2,6,23,.92);
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+    }
+
+    .btn{
+      height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      border: 1px solid var(--btnStroke);
+      background: var(--btn);
+      color: rgba(255,255,255,.86);
+      cursor:pointer;
+      font-weight: 760;
+      font-size: 12px;
+      transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+      user-select:none;
+      white-space: nowrap;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .btn:hover{ transform: translateY(-1px); background: var(--btnHover); border-color: rgba(255,255,255,.24); }
+    .btn.primary{
+      border-color: rgba(255,255,255,0);
+      background: linear-gradient(135deg, rgba(37,99,235,.95), rgba(124,58,237,.95));
+      box-shadow: 0 14px 42px rgba(37,99,235,.25);
+    }
+
+    .kbd{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height: 22px;
+      padding: 0 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.86);
+      font-size: 11px;
+      font-weight: 820;
+      letter-spacing: .02em;
+    }
+
+    .card{
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,.06));
+      border: 1px solid var(--stroke);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(720px 260px at 25% 20%, rgba(255,255,255,.12), transparent 60%),
+        radial-gradient(720px 260px at 85% 80%, rgba(124,58,237,.10), transparent 60%);
+      pointer-events:none;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 22px;
+      align-items: start;
+      margin-top: 18px;
+    }
+    .heroMain{ padding: 26px 26px 20px; }
+    h1{
+      margin: 0 0 12px;
+      font-size: clamp(36px, 4.9vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+      font-weight: 820;
+    }
+    .sub{
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.75;
+      max-width: 74ch;
+    }
+
+    .heroBadges{
+      margin-top: 16px;
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.76);
+      font-size: 12px;
+      user-select:none;
+      transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+      white-space: nowrap;
+    }
+    .chip:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22);
+    }
+    .dot{
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.25));
+      box-shadow: 0 0 0 3px rgba(255,255,255,.08);
+      flex: 0 0 auto;
+    }
+
+    .heroCTA{
+      margin-top: 18px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .heroCTA .hint{
+      color: rgba(255,255,255,.58);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .heroSide{ padding: 18px; box-shadow: var(--shadow2); }
+    .miniGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .mini{
+      padding: 12px 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+    }
+    .mini b{
+      display:block;
+      font-size: 13px;
+      letter-spacing:.01em;
+      font-weight: 820;
+      margin-bottom: 6px;
+      color: rgba(255,255,255,.88);
+    }
+    .mini span{
+      display:block;
+      font-size: 12px;
+      color: rgba(255,255,255,.62);
+      line-height: 1.55;
+    }
+
+    .switcher{ margin-top: 18px; display:flex; justify-content:flex-start; }
+
+    .tabs{
+      display:inline-flex;
+      gap: var(--tab-gap);
+      padding: var(--tab-pad);
+      border-radius:999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--stroke);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 10px 35px rgba(0,0,0,.22);
+      position: relative;
+      overflow:hidden;
+      z-index: 2;
+      isolation: isolate;
+    }
+    .tabs .pill{
+      position:absolute;
+      top: var(--tab-pad);
+      left: var(--tab-pad);
+      height: var(--tab-h);
+      width: var(--tab-w);
+      border-radius:999px;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 16px 45px rgba(0,0,0,.22);
+      transition: transform .55s var(--ease), width .55s var(--ease);
+      will-change: transform, width;
+      z-index:0;
+    }
+
+    .tabs button{
+      position:relative;
+      z-index:1;
+      appearance:none;
+      border:none;
+      background: transparent;
+      height: var(--tab-h);
+      width: var(--tab-w);
+      padding: 0 14px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-weight: 820;
+      font-size: 13px;
+      letter-spacing:.01em;
+      color: rgba(255,255,255,.62);
+      transition: color .35s var(--ease), transform .35s var(--ease);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      user-select:none;
+      outline:none;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+    .tabs button:hover{ color: rgba(255,255,255,.86); transform: translateY(-1px); }
+    .tabs button.active{ color: rgba(2,6,23,.92); }
+
+    .tabs button > span:first-child{
+      display:inline-block;
+      max-width: 92px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      height: 20px;
+      padding: 0 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.70);
+      font-size: 11px;
+      font-weight: 900;
+      transition: all .35s var(--ease);
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+    .tabs button.active .tag{
+      border-color: rgba(0,0,0,.06);
+      background: rgba(0,0,0,.05);
+      color: rgba(0,0,0,.56);
+    }
+
+    .panel{ margin-top: 18px; padding: 20px; }
+    .panel::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(700px 260px at 15% 20%, rgba(37,99,235,.14), transparent 60%),
+        radial-gradient(700px 260px at 85% 70%, rgba(124,58,237,.14), transparent 60%);
+      pointer-events:none;
+    }
+    .panelTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+    .agentTitle{
+      margin:0;
+      font-size: 18px;
+      letter-spacing: -.01em;
+      font-weight: 900;
+    }
+    .agentDesc{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+      max-width: 92ch;
+    }
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
       align-items:center;
     }
-    .industry-card .demo-link {
-      font-weight:600;
-      color:#b88b44;
-    }
-    .industry-card .badge {
-      font-size:12px;
-      padding:6px 10px;
-      border-radius:999px;
-      background: rgba(184,139,68,0.08);
-      color:#5c4a33;
-      border:1px solid rgba(184,139,68,0.12);
+    .divider{
+      height:1px;
+      background: rgba(255,255,255,.10);
+      margin-top: 14px;
+      position: relative;
+      z-index:1;
     }
 
-    /* Featured big card (wow effect) */
-    .featured {
+    .promptRow{
+      margin-top: 14px;
       display:flex;
-      gap:20px;
-      align-items:stretch;
-      margin-top:36px;
+      gap:10px;
+      flex-wrap:wrap;
+      position: relative;
+      z-index: 1;
     }
-    .featured .left {
-      flex:1.2;
-      background: linear-gradient(135deg, #fffaf6, #f6efe7);
-      border-radius: 16px;
-      padding: 28px;
-      border: 1px solid rgba(153,129,89,0.18);
-      box-shadow: 0 20px 60px rgba(158,132,93,0.08);
+    .prompt{
+      border-radius:999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.86);
+      padding: 10px 12px;
+      cursor:pointer;
+      font-weight: 820;
+      font-size: 12px;
+      transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+      white-space: nowrap;
     }
-    .featured h3 { margin:0 0 10px; font-size:22px; font-family:"Playfair Display", serif; color:#3b2f21; }
-    .featured p { color:#6d6154; margin:0 0 18px; }
-    .featured .btn {
-      display:inline-block;
-      padding:10px 18px;
-      border-radius:10px;
-      background: linear-gradient(135deg,#b88b44,#d3b27a);
-      color:#fff;
-      font-weight:600;
+    .prompt:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.24); }
+
+    .section{ margin-top: 26px; padding: 24px; }
+    .sectionHead{
+      display:flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      position: relative;
+      z-index:1;
+      margin-bottom: 14px;
     }
-    .featured .right {
-      flex:0.9;
+    .sectionHead h2{ margin:0; font-size: 20px; font-weight: 920; letter-spacing: -.02em; }
+    .sectionHead p{ margin:0; color: var(--muted); font-size: 13px; line-height: 1.6; max-width: 76ch; }
+
+    .grid3{
+      position: relative;
+      z-index: 1;
       display:grid;
-      grid-template-columns: repeat(1,1fr);
-      gap:12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
     }
-    .mini-card {
-      background:#fff;
-      border-radius:12px;
-      padding:14px;
-      border:1px solid rgba(153,129,89,0.12);
-      box-shadow: 0 10px 30px rgba(158,132,93,0.06);
+    .grid2{
+      position: relative;
+      z-index: 1;
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
     }
-    .mini-card h4 { margin:0 0 6px; font-size:16px; color:#3b2f21; }
-    .mini-card p { margin:0; color:#6d6154; font-size:14px; }
+    .box{
+      padding: 16px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+    }
+    .box h3{
+      margin:0 0 8px;
+      font-size: 14px;
+      font-weight: 920;
+      letter-spacing: -.01em;
+      color: rgba(255,255,255,.90);
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .box p{
+      margin:0;
+      color: rgba(255,255,255,.64);
+      font-size: 13px;
+      line-height: 1.68;
+    }
+    .ico{
+      width: 22px;
+      height: 22px;
+      border-radius: 9px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      flex: 0 0 auto;
+    }
 
-    /* Footer */
-    footer {
-      padding: 40px 0;
-      text-align:center;
-      color:#777;
-      border-top:1px solid rgba(0,0,0,0.04);
-      margin-top:60px;
+    .logoStrip{
+      position: relative;
+      z-index: 1;
+      display:grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      opacity: .95;
+    }
+    .logoTile{
+      height: 54px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: rgba(255,255,255,.62);
+      font-weight: 900;
+      letter-spacing: .02em;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      padding: 0 10px;
     }
 
-    /* Responsive tweaks */
-    @media (max-width: 920px) {
-      .featured { flex-direction:column; }
-      .featured .right { grid-template-columns: repeat(2,1fr); }
+    .tableWrap{
+      position: relative;
+      z-index: 1;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      overflow:hidden;
     }
-    @media (max-width: 640px) {
-      .hero h1 { font-size:32px; }
-      .industries-grid { gap:16px; }
-      .industry-card { padding:18px; border-radius:12px; }
-      .featured .left { padding:20px; }
+    table{
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      color: rgba(255,255,255,.84);
+    }
+    th,td{
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      vertical-align: top;
+    }
+    th{
+      text-align:left;
+      color: rgba(255,255,255,.92);
+      font-weight: 920;
+      background: rgba(255,255,255,.04);
+    }
+    tr:last-child td{ border-bottom:none; }
+    .check{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      font-weight: 920;
+    }
+
+    .steps{
+      position: relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .stepNum{
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 980;
+      letter-spacing: -.01em;
+      color: rgba(2,6,23,.92);
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 12px 34px rgba(0,0,0,.18);
+      margin-bottom: 10px;
+    }
+
+    .quote{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .quote p{
+      margin:0;
+      font-size: 13px;
+      line-height: 1.75;
+      color: rgba(255,255,255,.70);
+    }
+    .quote b{
+      font-size: 12px;
+      color: rgba(255,255,255,.88);
+      font-weight: 920;
+    }
+    .stars{
+      display:flex;
+      gap:4px;
+      opacity: .95;
+    }
+    .star{
+      width: 12px;
+      height: 12px;
+      display:inline-block;
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.55));
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    }
+
+    .faq{
+      position: relative;
+      z-index:1;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    details{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      overflow:hidden;
+      transition: border-color .35s var(--ease), background .35s var(--ease);
+    }
+    details:hover{ border-color: rgba(255,255,255,.22); background: rgba(255,255,255,.075); }
+    summary{
+      list-style: none;
+      cursor: pointer;
+      padding: 14px 14px;
+      font-weight: 920;
+      font-size: 13px;
+      color: rgba(255,255,255,.90);
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      user-select:none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .faqBody{
+      padding: 0 14px 14px;
+      color: rgba(255,255,255,.66);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .chev{
+      width: 20px;
+      height: 20px;
+      opacity: .8;
+      transition: transform .35s var(--ease), opacity .35s var(--ease);
+      flex: 0 0 auto;
+    }
+    details[open] .chev{ transform: rotate(180deg); opacity: 1; }
+
+    .cta{
+      margin-top: 26px;
+      padding: 24px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .cta h2{ margin:0; font-size: 20px; font-weight: 980; letter-spacing: -.02em; }
+    .cta p{ margin: 6px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; max-width: 78ch; }
+    .ctaRight{ display:flex; align-items:center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .mail{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 11px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      text-decoration: none;
+      color: rgba(255,255,255,.90);
+      font-weight: 920;
+      font-size: 12px;
+      transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+      white-space: nowrap;
+    }
+    .mail:hover{ transform: translateY(-1px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.22); }
+
+    footer{
+      margin-top: 28px;
+      padding: 18px 6px 0;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      color: rgba(255,255,255,.55);
+      font-size: 12px;
+      flex-wrap: wrap;
+    }
+    .footerLinks{ display:flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+    .footerLinks a{
+      color: rgba(255,255,255,.72);
+      text-decoration:none;
+      border-bottom: 1px solid rgba(255,255,255,.0);
+      transition: border-color .25s ease, color .25s ease;
+      white-space: nowrap;
+    }
+    .footerLinks a:hover{ color: rgba(255,255,255,.88); border-color: rgba(255,255,255,.35); }
+
+    .stickyCTA{
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: calc(16px + var(--safeBottom));
+      z-index: 40;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(2,6,23,.46);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      box-shadow: 0 18px 70px rgba(0,0,0,.45);
+      transform: translateY(22px);
+      opacity: 0;
+      transition: transform .6s var(--ease), opacity .6s var(--ease);
+      pointer-events:none;
+    }
+    .stickyCTA.on{ transform: translateY(0); opacity: 1; pointer-events:auto; }
+    .stickyCTA b{
+      display:block;
+      font-size: 12px;
+      font-weight: 980;
+      letter-spacing: .01em;
+      color: rgba(255,255,255,.92);
+    }
+    .stickyCTA span{
+      display:block;
+      font-size: 12px;
+      color: rgba(255,255,255,.64);
+      line-height: 1.45;
+    }
+    .stickyCTA .right{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+      align-items:center;
+    }
+    .stickyCTA .x{
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      cursor:pointer;
+      color: rgba(255,255,255,.90);
+      font-weight: 900;
+    }
+
+    .reveal{ opacity: 0; transform: translateY(12px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .reveal.on{ opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 980px){
+      .hero{ grid-template-columns: 1fr; }
+      .actions{ justify-content: flex-start; }
+      .cta{ flex-direction: column; align-items: flex-start; }
+      .ctaRight{ justify-content: flex-start; }
+      .logoStrip{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px){
+      .grid3{ grid-template-columns: 1fr; }
+      .grid2{ grid-template-columns: 1fr; }
+      .steps{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px){
+      .wrap{ padding: calc(56px + var(--safeTop)) 16px calc(170px + var(--safeBottom)); }
+      .tabs{ width: 100%; }
+      .tabs button{
+        width: auto;
+        flex: 1 1 0;
+        padding: 0 10px;
+      }
+      .tabs .pill{ width: calc((100% - (var(--tab-pad) * 2) - (var(--tab-gap) * 2)) / 3); }
+      .topbar{ padding: 0 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .reveal, .tabs .pill, .btn, .chip, .prompt, .mail{ transition: none !important; }
+      .stickyCTA{ transition:none !important; }
+    }
+  </style>
+
+  <!-- Kontaktio widget theming (KEEP) -->
+  <style>
+    :root {
+      --k-accent: #2563eb;
+      --k-accent2: #7c3aed;
+      --k-glass: rgba(15, 23, 42, 0.62);
+      --k-glass-soft: rgba(2, 6, 23, 0.28);
+      --k-border: rgba(255, 255, 255, 0.14);
+      --k-text: rgba(255, 255, 255, 0.92);
+      --k-muted: rgba(255, 255, 255, 0.7);
+    }
+
+    .kontaktio-launcher{
+      right: 22px !important;
+      left: auto !important;
+      bottom: calc(22px + var(--safeBottom)) !important;
+      top: auto !important;
+      position: fixed !important;
+      z-index: 999999 !important;
+    }
+    .kontaktio-widget{
+      right: 22px !important;
+      left: auto !important;
+      bottom: calc(96px + var(--safeBottom)) !important;
+      top: auto !important;
+      position: fixed !important;
+      z-index: 999998 !important;
+    }
+    @media (max-width: 560px){
+      .kontaktio-launcher{ right: 14px !important; bottom: calc(14px + var(--safeBottom)) !important; }
+      .kontaktio-widget{ right: 14px !important; bottom: calc(88px + var(--safeBottom)) !important; }
+    }
+
+    .kontaktio-launcher {
+      width: 60px !important;
+      height: 60px !important;
+      border-radius: 999px !important;
+      background: linear-gradient(135deg, var(--k-accent), var(--k-accent2)) !important;
+      color: #fff !important;
+      border: 1px solid rgba(255,255,255,.22) !important;
+      box-shadow:
+        0 18px 50px rgba(0,0,0,.35),
+        0 0 0 10px rgba(37,99,235,.12),
+        0 0 0 22px rgba(124,58,237,.08) !important;
+      overflow: hidden !important;
+    }
+    .kontaktio-launcher::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(60% 60% at 30% 30%, rgba(255,255,255,.45), transparent 60%),
+        radial-gradient(60% 60% at 70% 70%, rgba(255,255,255,.18), transparent 62%);
+      filter: blur(6px);
+      animation: kontaktioAurora 7s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .kontaktio-launcher > div {
+      position: relative;
+      z-index: 2;
+      font-size: 22px;
+    }
+
+    .kontaktio-widget {
+      border-radius: 22px !important;
+      border: 1px solid var(--k-border) !important;
+      background: var(--k-glass) !important;
+      backdrop-filter: blur(18px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
+      box-shadow:
+        0 28px 90px rgba(0,0,0,.45),
+        0 1px 0 rgba(255,255,255,.06) inset !important;
+      overflow: hidden !important;
+    }
+    .kontaktio-widget::before {
+      content: "";
+      position: absolute;
+      inset: -40px;
+      background:
+        radial-gradient(600px 420px at 20% 10%, rgba(37,99,235,.35), transparent 60%),
+        radial-gradient(520px 420px at 90% 0%, rgba(124,58,237,.30), transparent 58%),
+        radial-gradient(560px 460px at 30% 110%, rgba(16,185,129,.20), transparent 55%);
+      filter: blur(18px);
+      pointer-events: none;
+      animation: kontaktioAurora 9s ease-in-out infinite;
+    }
+
+    .kontaktio-header {
+      background: linear-gradient(180deg, rgba(2,6,23,.55), rgba(2,6,23,.18)) !important;
+      color: var(--k-text) !important;
+      border-bottom: 1px solid rgba(255,255,255,.1) !important;
+    }
+    .kontaktio-header-sub { color: var(--k-muted) !important; }
+
+    .kontaktio-bubble {
+      border-radius: 16px !important;
+      font-size: 14.5px !important;
+      line-height: 1.45 !important;
+      box-shadow:
+        0 16px 40px rgba(0,0,0,.18),
+        0 1px 0 rgba(255,255,255,.06) inset !important;
+    }
+    .kontaktio-row.bot .kontaktio-bubble {
+      background: rgba(255,255,255,.10) !important;
+      color: var(--k-text) !important;
+      border: 1px solid rgba(255,255,255,.12) !important;
+    }
+    .kontaktio-row.user .kontaktio-bubble {
+      background: linear-gradient(135deg, var(--k-accent), var(--k-accent2)) !important;
+      color: #fff !important;
+      border: 1px solid rgba(255,255,255,.10) !important;
+    }
+
+    .kontaktio-inputwrap {
+      background: linear-gradient(180deg, rgba(2,6,23,.12), rgba(2,6,23,.28)) !important;
+      border-top: 1px solid rgba(255,255,255,.1) !important;
+    }
+    .kontaktio-input {
+      background: rgba(255,255,255,.10) !important;
+      color: var(--k-text) !important;
+      border: 1px solid rgba(255,255,255,.14) !important;
+    }
+    .kontaktio-input::placeholder { color: rgba(255,255,255,.55) !important; }
+    .kontaktio-send {
+      background: linear-gradient(135deg, var(--k-accent), var(--k-accent2)) !important;
+      color: #fff !important;
+      border: 1px solid rgba(255,255,255,.18) !important;
+    }
+
+    .kontaktio-quick button,
+    .kontaktio-quick-replies button,
+    .kontaktio-quick-reply {
+      border-radius: 999px !important;
+      border: 1px solid rgba(255,255,255,.14) !important;
+      background: rgba(255,255,255,.08) !important;
+      color: rgba(255,255,255,.88) !important;
+      backdrop-filter: blur(14px) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
+      transition: transform .25s ease, background .25s ease, border-color .25s ease !important;
+      white-space: nowrap !important;
+    }
+    .kontaktio-quick button:hover,
+    .kontaktio-quick-replies button:hover,
+    .kontaktio-quick-reply:hover {
+      transform: translateY(-1px) !important;
+      background: rgba(255,255,255,.10) !important;
+      border-color: rgba(255,255,255,.22) !important;
+    }
+
+    @keyframes kontaktioAurora {
+      0% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(10px,-8px) scale(1.02); }
+      100% { transform: translate(0,0) scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .kontaktio-widget::before,
+      .kontaktio-launcher::before { animation: none !important; }
+    }
+  </style>
+
+  <!-- FIX + WOW: demo-sites in the same glass style (without changing your copy) -->
+  <style>
+    /* We keep your #demo-sites content but make it visually consistent */
+    #demo-sites{
+      margin-top: 26px;
+    }
+    #demo-sites .section-title{
+      margin:0;
+      font-size: 20px;
+      font-weight: 920;
+      letter-spacing: -.02em;
+    }
+    #demo-sites .section-subtitle{
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      max-width: 76ch;
+    }
+
+    /* Wrap: same rhythm as other sections */
+    #demo-sites .demo-grid{
+      position: relative;
+      z-index: 1;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    /* The card is glass now, not flat dark */
+    #demo-sites .demo-card{
+      display:block;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      text-decoration:none;
+      color: inherit;
+      transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+      position: relative;
+      overflow:hidden;
+      box-shadow: 0 16px 60px rgba(0,0,0,.22);
+    }
+    #demo-sites .demo-card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(650px 260px at 20% 30%, rgba(37,99,235,.14), transparent 60%),
+        radial-gradient(650px 260px at 85% 70%, rgba(124,58,237,.14), transparent 60%),
+        radial-gradient(520px 240px at 50% 110%, rgba(34,211,238,.10), transparent 62%);
+      pointer-events:none;
+      opacity: .95;
+    }
+    #demo-sites .demo-card:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.075);
+      border-color: rgba(255,255,255,.22);
+    }
+
+    #demo-sites .demo-card-inner{
+      position: relative;
+      z-index: 1;
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    #demo-sites .demo-card-copy{
+      min-width: 0;
+    }
+    #demo-sites .demo-card-inner h3{
+      margin: 0 0 8px;
+      font-size: 16px;
+      font-weight: 920;
+      letter-spacing: -.01em;
+      color: rgba(255,255,255,.92);
+    }
+    #demo-sites .demo-card-inner p{
+      margin: 0;
+      font-size: 13px;
+      color: rgba(255,255,255,.66);
+      line-height: 1.65;
+      max-width: 78ch;
+    }
+    #demo-sites .demo-cta{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 920;
+      color: rgba(255,255,255,.90);
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      padding: 9px 12px;
+      transition: transform .35s var(--ease), background .35s var(--ease), border-color .35s var(--ease);
+      white-space: nowrap;
+    }
+    #demo-sites .demo-card:hover .demo-cta{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.085);
+      border-color: rgba(255,255,255,.22);
+    }
+
+    /* WOW: small “preview strip” – visual only (no new marketing copy) */
+    #demo-sites .demo-preview{
+      flex: 0 0 260px;
+      width: 260px;
+      height: 120px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(120px 80px at 25% 35%, rgba(255,255,255,.18), transparent 65%),
+        radial-gradient(160px 120px at 75% 60%, rgba(124,58,237,.18), transparent 70%),
+        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      position: relative;
+      overflow:hidden;
+      box-shadow: 0 18px 60px rgba(0,0,0,.20);
+    }
+    #demo-sites .demo-preview::after{
+      content:"";
+      position:absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.10), rgba(255,255,255,0), rgba(255,255,255,.08));
+      transform: translateX(-45%);
+      opacity: .85;
+      animation: demoShine 3.2s var(--ease) infinite;
+      pointer-events:none;
+    }
+    @keyframes demoShine{
+      0%{ transform: translateX(-55%); opacity: .0; }
+      25%{ opacity: .55; }
+      60%{ opacity: .35; }
+      100%{ transform: translateX(55%); opacity: 0; }
+    }
+    #demo-sites .demo-preview .bars{
+      position:absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      display:flex;
+      gap: 8px;
+      opacity: .9;
+    }
+    #demo-sites .demo-preview .bar{
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    #demo-sites .demo-preview .bar:nth-child(1){ width: 54%; }
+    #demo-sites .demo-preview .bar:nth-child(2){ width: 36%; }
+    #demo-sites .demo-preview .bar:nth-child(3){ width: 22%; }
+
+    @media (max-width: 720px){
+      #demo-sites .demo-card-inner{ flex-direction:column; }
+      #demo-sites .demo-preview{ width: 100%; flex-basis: auto; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      #demo-sites .demo-preview::after{ animation:none !important; }
     }
   </style>
 </head>
+
 <body>
+  <div class="aurora"></div>
+  <div class="noise"></div>
+  <div class="glow" id="glow"></div>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container">
-      <h1>Wybierz branżę</h1>
-      <p class="lead">Każda branża ma przygotowaną przykładową stronę oraz działającego asystenta AI — gotowe demo, które możesz uruchomić jako subdomenę lub osobny projekt.</p>
-      <a class="hero-cta" href="#industries">Zobacz branże</a>
-    </div>
-  </section>
-
-  <!-- Industries grid -->
-  <section id="industries">
-    <div class="container">
-      <div class="featured" aria-hidden="false">
-        <div class="left">
-          <h3>Jak to działa — szybkie demo w 24h</h3>
-          <p>Wybierz branżę, uruchom demo na subdomenie i zobacz, jak asystent przejmuje powtarzalne pytania klientów. To pełne doświadczenie: strona, asystent i panel administracyjny.</p>
-          <a class="btn" href="mailto:kontakt@kontaktio.pl">Poproś o demo</a>
+  <div class="topbarSticky">
+    <div class="topbar">
+      <a class="brand" href="#top" aria-label="Kontaktio">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brandText">
+          <b>Kontaktio</b>
+          <span data-i18n="top.tagline">Asystenci AI dla firm</span>
         </div>
-        <div class="right">
-          <div class="mini-card">
-            <h4>Hotel / Pensjonat</h4>
-            <p>Rezerwacje, dostępność, FAQ i upsell usług dodatkowych.</p>
-          </div>
-          <div class="mini-card">
-            <h4>Restauracja / Catering</h4>
-            <p>Menu, zamówienia, dostępność terminów i obsługa eventów.</p>
-          </div>
-          <div class="mini-card">
-            <h4>Salon beauty</h4>
-            <p>Rezerwacje, cennik, przypomnienia i cross-sell zabiegów.</p>
-          </div>
-          <div class="mini-card">
-            <h4>Usługi lokalne</h4>
-            <p>Umawianie wizyt, wyceny i szybki kontakt z technikiem.</p>
+      </a>
+
+      <div class="topActions">
+        <button class="btn" id="btnJumpDemo" type="button">
+          <span data-i18n="top.try">Przejdź do demo</span>
+          <span class="kbd">⌘K</span>
+        </button>
+
+        <div class="lang" aria-label="Language">
+          <button id="langPL" class="active" type="button">PL</button>
+          <button id="langEN" type="button">EN</button>
+        </div>
+
+        <a class="btn primary" href="#contact" style="text-decoration:none;">
+          <span data-i18n="top.cta">Chcę wersję dla firmy</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="card heroMain reveal" data-reveal>
+        <h1 data-i18n="hero.title">AI asystent, który brzmi jak Twoja firma — i domyka kontakt.</h1>
+        <p class="sub" data-i18n="hero.sub">
+          Ludzie wchodzą na stronę i mają te same pytania. Kontaktio odpowiada natychmiast, w Twoim stylu, na Twoich danych — i prowadzi rozmowę do konkretu: oferta, kontakt, wycena, termin.
+        </p>
+
+        <div class="heroBadges">
+          <div class="chip"><span class="dot"></span><span data-i18n="chips.1">Odpowiedzi dopasowane do firmy</span></div>
+          <div class="chip"><span class="dot"></span><span data-i18n="chips.2">Dostępność 24/7</span></div>
+          <div class="chip"><span class="dot"></span><span data-i18n="chips.3">Spójny ton i zasady</span></div>
+          <div class="chip"><span class="dot"></span><span data-i18n="chips.4">Szybkie wdrożenie</span></div>
+          <div class="chip"><span class="dot"></span><span data-i18n="chips.5">Zero “wymyślania” faktów</span></div>
+        </div>
+
+        <div class="heroCTA">
+          <button class="btn primary" id="btnOpenHero" type="button" data-i18n="hero.open">Otwórz asystenta</button>
+          <button class="btn" id="btnScrollHow" type="button" data-i18n="hero.how">Jak to działa</button>
+          <span class="hint" data-i18n="hero.hint">Tip: kliknij gotowe pytanie — asystent startuje w 1 sekundę.</span>
+        </div>
+
+        <div class="switcher" id="demo">
+          <div class="tabs" id="tabs">
+            <div class="pill" id="pill"></div>
+
+            <button data-client="amico" class="active" data-label="Amico" type="button">
+              <span>Amico</span>
+              <span class="tag" data-i18n="tags.local">lokalny</span>
+            </button>
+
+            <button data-client="demo" data-label="Demo" type="button">
+              <span>Demo</span>
+              <span class="tag" data-i18n="tags.general">uniwersalny</span>
+            </button>
+
+            <button data-client="premium" data-label="Premium" type="button">
+              <span>Premium</span>
+              <span class="tag" data-i18n="tags.premium">elegancki</span>
+            </button>
           </div>
         </div>
       </div>
 
-      <div class="industries-grid" style="margin-top:36px;">
-        <a class="industry-card" href="https://catering.kontaktio.pl" target="_blank" rel="noopener">
-          <h3>Catering / Gastronomia</h3>
-          <p>Strona z menu, ofertą i asystentem AI dla klientów. Demo uruchomione na subdomenie, z pełnym panelem zamówień.</p>
-          <div class="card-foot">
-            <span class="badge">Demo</span>
-            <span class="demo-link">Otwórz demo →</span>
+      <aside class="card heroSide reveal" data-reveal>
+        <div class="miniGrid">
+          <div class="mini">
+            <b data-i18n="side.how.title">Jak testować</b>
+            <span data-i18n="side.how.body">Kliknij ikonę czatu (prawy dół). Zapytaj o ofertę, godziny, wycenę lub “co dalej?”.</span>
           </div>
-        </a>
-
-        <a class="industry-card" href="#" onclick="alert('Demo w przygotowaniu'); return false;">
-          <h3>Salon kosmetyczny</h3>
-          <p>Rezerwacje, cennik i automatyczna obsługa zapytań — klient rezerwuje termin bez telefonu.</p>
-          <div class="card-foot">
-            <span class="badge">Soon</span>
-            <span class="demo-link">Zobacz →</span>
+          <div class="mini">
+            <b data-i18n="side.why.title">Co zobaczysz w praktyce</b>
+            <span data-i18n="side.why.body">Różne firmy = różna wiedza, ton i prowadzenie rozmowy. To nie jest “uniwersalny chatbot”.</span>
           </div>
-        </a>
-
-        <a class="industry-card" href="#" onclick="alert('Demo w przygotowaniu'); return false;">
-          <h3>Hotel / Apartamenty</h3>
-          <p>Asystent odpowiada na pytania o dostępność, ceny i udogodnienia, integracja z systemem rezerwacji.</p>
-          <div class="card-foot">
-            <span class="badge">Soon</span>
-            <span class="demo-link">Zobacz →</span>
+          <div class="mini">
+            <b data-i18n="side.safe.title">Kontrola</b>
+            <span data-i18n="side.safe.body">Asystent trzyma się danych. Gdy czegoś nie ma — pyta albo kieruje do kontaktu.</span>
           </div>
-        </a>
-
-        <a class="industry-card" href="#" onclick="alert('Demo w przygotowaniu'); return false;">
-          <h3>Trener personalny</h3>
-          <p>Oferta treningów, plany i automatyczne umawianie sesji — klient otrzymuje plan i przypomnienia.</p>
-          <div class="card-foot">
-            <span class="badge">Soon</span>
-            <span class="demo-link">Zobacz →</span>
+          <div class="mini">
+            <b data-i18n="side.time.title">Wrażenie</b>
+            <span data-i18n="side.time.body">Twoja strona zaczyna “żyć” — klient od razu wie, że trafił do ogarniętej firmy.</span>
           </div>
-        </a>
+        </div>
+      </aside>
+    </section>
 
-        <a class="industry-card" href="#" onclick="alert('Demo w przygotowaniu'); return false;">
-          <h3>Usługi lokalne</h3>
-          <p>Hydraulik, elektryk, mechanik – szybkie odpowiedzi, wyceny i umawianie wizyt przez chat.</p>
-          <div class="card-foot">
-            <span class="badge">Soon</span>
-            <span class="demo-link">Zobacz →</span>
-          </div>
-        </a>
+    <section class="card panel reveal" data-reveal>
+      <div class="panelTop">
+        <div>
+          <h2 class="agentTitle" id="agentTitle">Amico</h2>
+          <p class="agentDesc" id="agentDesc" data-i18n="agent.amico">
+            Styl przyjazny i konkretny. Dobry do firm usługowych, gdzie liczy się szybka odpowiedź i kontakt.
+          </p>
+        </div>
 
-        <a class="industry-card" href="#" onclick="alert('Demo w przygotowaniu'); return false;">
-          <h3>E‑commerce</h3>
-          <p>Asystent produktowy, rekomendacje i obsługa klienta — integracja z katalogiem produktów.</p>
-          <div class="card-foot">
-            <span class="badge">Soon</span>
-            <span class="demo-link">Zobacz →</span>
+        <div class="actions">
+          <button class="btn primary" id="btnOpen" type="button" data-i18n="buttons.open">Otwórz asystenta</button>
+          <button class="btn" id="btnClear" type="button" data-i18n="buttons.clear">Wyczyść rozmowę</button>
+        </div>
+      </div>
+
+      <div class="promptRow" id="promptRow">
+        <button class="prompt" data-prompt="offer" type="button">Jaka jest oferta?</button>
+        <button class="prompt" data-prompt="price" type="button">Ile to kosztuje?</button>
+        <button class="prompt" data-prompt="hours" type="button">Jakie godziny?</button>
+        <button class="prompt" data-prompt="contact" type="button">Jak najszybciej się skontaktować?</button>
+        <button class="prompt" data-prompt="next" type="button">Co dalej krok po kroku?</button>
+      </div>
+
+      <div class="divider"></div>
+    </section>
+
+    <!-- FIXED + WOW: demo-sites as a consistent glass section -->
+    <section id="demo-sites" class="card section reveal" data-reveal>
+      <div class="sectionHead">
+        <div>
+          <h2 class="section-title">Zobacz, jak może wyglądać Twoja strona</h2>
+          <p class="section-subtitle">
+            Przygotowałem gotowe przykłady stron dla różnych branż. Każda z nich działa z Twoim własnym asystentem AI.
+          </p>
+        </div>
+      </div>
+
+      <div class="demo-grid">
+        <a href="branze.html" class="demo-card">
+          <div class="demo-card-inner">
+            <div class="demo-card-copy">
+              <h3>Przykładowe realizacje</h3>
+              <p>Strony dla salonów, restauracji, hoteli, trenerów, usług i wielu innych.</p>
+              <span class="demo-cta">Zobacz wszystkie branże →</span>
+            </div>
+
+            <div class="demo-preview" aria-hidden="true">
+              <div class="bars">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+              </div>
+            </div>
           </div>
         </a>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer>
-    © Kontaktio – przykładowe wdrożenia
-  </footer>
+    <section class="card section reveal" data-reveal>
+      <div class="sectionHead">
+        <div>
+          <h2 data-i18n="logos.title">Brzmi znajomo? To są realne branże.</h2>
+          <p data-i18n="logos.sub">Te typy firm mają masę powtarzalnych pytań. Asystent przejmuje je natychmiast, zanim klient wyjdzie ze strony.</p>
+        </div>
+      </div>
+
+      <div class="logoStrip">
+        <div class="logoTile">Hotel / Pensjonat</div>
+        <div class="logoTile">Restauracja</div>
+        <div class="logoTile">Salon beauty</div>
+        <div class="logoTile">Mechanik</div>
+        <div class="logoTile">Kancelaria</div>
+        <div class="logoTile">Szkoła / kursy</div>
+      </div>
+    </section>
+
+    <section class="card section reveal" data-reveal id="how">
+      <div class="sectionHead">
+        <div>
+          <h2 data-i18n="why.title">Dlaczego ludzie mówią: “O kurczę, oni ogarniają”</h2>
+          <p data-i18n="why.sub">Bo w pierwszych 20 sekundach dostają dokładnie to, czego potrzebują: odpowiedź + następny krok.</p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="box">
+          <h3><span class="ico">1</span><span data-i18n="why.b1.title">Prowadzenie rozmowy</span></h3>
+          <p data-i18n="why.b1.body">Asystent nie “gada”. Popycha rozmowę do celu: oferta, terminy, kontakt, wycena.</p>
+        </div>
+        <div class="box">
+          <h3><span class="ico">2</span><span data-i18n="why.b2.title">Język klienta</span></h3>
+          <p data-i18n="why.b2.body">Dostosowuje styl: krótko, konkretnie, bez IT-słówek i bez lania wody.</p>
+        </div>
+        <div class="box">
+          <h3><span class="ico">3</span><span data-i18n="why.b3.title">Uczciwość danych</span></h3>
+          <p data-i18n="why.b3.body">Gdy czegoś nie ma w wiedzy — informuje i proponuje najlepszą ścieżkę kontaktu.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section reveal" data-reveal>
+      <div class="sectionHead">
+        <div>
+          <h2 data-i18n="compare.title">Kontaktio vs “zwykły chat”</h2>
+          <p data-i18n="compare.sub">Różnica nie jest w tym, że jest AI. Różnica jest w tym, że to jest ustawione pod firmę i ma cel.</p>
+        </div>
+      </div>
+
+      <div class="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="compare.h1">Obszar</th>
+              <th data-i18n="compare.h2">Kontaktio</th>
+              <th data-i18n="compare.h3">Zwykły chatbot</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="compare.r1c1">Ton i styl</td>
+              <td><span class="check">✓</span> <span data-i18n="compare.r1c2">Dopasowany do marki</span></td>
+              <td data-i18n="compare.r1c3">Losowy / generyczny</td>
+            </tr>
+            <tr>
+              <td data-i18n="compare.r2c1">Wiedza</td>
+              <td><span class="check">✓</span> <span data-i18n="compare.r2c2">Na Twoich danych</span></td>
+              <td data-i18n="compare.r2c3">“Jak mi się wydaje”</td>
+            </tr>
+            <tr>
+              <td data-i18n="compare.r3c1">Cel rozmowy</td>
+              <td><span class="check">✓</span> <span data-i18n="compare.r3c2">Kieruje do kontaktu / oferty</span></td>
+              <td data-i18n="compare.r3c3">Często tylko odpowiada</td>
+            </tr>
+            <tr>
+              <td data-i18n="compare.r4c1">Efekt dla firmy</td>
+              <td><span class="check">✓</span> <span data-i18n="compare.r4c2">Mniej straconych leadów</span></td>
+              <td data-i18n="compare.r4c3">Brak przewidywalności</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card section reveal" data-reveal>
+      <div class="sectionHead">
+        <div>
+          <h2 data-i18n="benefits.title">Co to daje firmie</h2>
+          <p data-i18n="benefits.sub">To są praktyczne rzeczy, które widać w rozmowie. Zero bajek.</p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="box">
+          <h3><span class="ico">↘</span><span data-i18n="benefits.b1.title">Mniej straconych zapytań</span></h3>
+          <p data-i18n="benefits.b1.body">Klient nie czeka. Dostaje odpowiedź od razu i wie, co zrobić dalej.</p>
+        </div>
+        <div class="box">
+          <h3><span class="ico">⚡</span><span data-i18n="benefits.b2.title">Odciążenie zespołu</span></h3>
+          <p data-i18n="benefits.b2.body">Powtarzalne pytania (oferta, godziny, kontakt) obsługuje asystent.</p>
+        </div>
+        <div class="box">
+          <h3><span class="ico">◎</span><span data-i18n="benefits.b3.title">Spójne komunikaty</span></h3>
+          <p data-i18n="benefits.b3.body">Jedna jakość odpowiedzi niezależnie od pory dnia, humoru czy zmiany w zespole.</p>
+        </div>
+        <div class="box">
+          <h3><span class="ico">★</span><span data-i18n="benefits.b4.title">Lepsze pierwsze wrażenie</span></h3>
+          <p data-i18n="benefits.b4.body">To często pierwszy kontakt klienta z firmą. Liczy się szybkość i klarowność.</p>
+        </div>
+        <div class="box">
+          <h3><span class="ico">⟡</span><span data-i18n="benefits.b5.title">Dopasowanie do branży</span></h3>
+          <p data-i18n="benefits.b5.body">Inna firma = inna wiedza i styl. Nie ma jednego “uniwersalnego chatbota”.</p>
+        </div>
+        <div class="box">
+          <h3><span class="ico">⟳</span><span data-i18n="benefits.b6.title">Łatwe aktualizacje</span></h3>
+          <p data-i18n="benefits.b6.body">Zmiany w ofercie? Aktualizujemy konfigurację i asystent mówi aktualnymi informacjami.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section reveal" data-reveal>
+      <div class="sectionHead">
+        <div>
+          <h2 data-i18n="onboarding.title">Jak wygląda wdrożenie</h2>
+          <p data-i18n="onboarding.sub">Bez technicznego gadania. Po prostu: co robimy i kiedy możesz to mieć u siebie.</p>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="box">
+          <div class="stepNum">1</div>
+          <h3 data-i18n="onboarding.s1.title">Krótka rozmowa</h3>
+          <p data-i18n="onboarding.s1.body">Ustalamy, co ma odpowiadać asystent, jakim tonem i dokąd ma kierować klienta.</p>
+        </div>
+        <div class="box">
+          <div class="stepNum">2</div>
+          <h3 data-i18n="onboarding.s2.title">Konfiguracja i test</h3>
+          <p data-i18n="onboarding.s2.body">Przygotowujemy wersję dopasowaną do firmy i wysyłamy do sprawdzenia na żywo.</p>
+        </div>
+        <div class="box">
+          <div class="stepNum">3</div>
+          <h3 data-i18n="onboarding.s3.title">Start</h3>
+          <p data-i18n="onboarding.s3.body">Uruchamiamy asystenta na stronie i obserwujemy, jakie pytania pojawiają się najczęściej.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section reveal" data-reveal>
+      <div class="sectionHead">
+        <div>
+          <h2 data-i18n="testi.title">Jak to jest odbierane</h2>
+          <p data-i18n="testi.sub">To są przykłady tego “uczucia”, o które Ci chodzi: klient widzi, że firma ma proces i poziom.</p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="box quote">
+          <div class="stars" aria-hidden="true"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div>
+          <p data-i18n="testi.q1">“Pierwszy raz ktoś od razu odpowiedział mi sensownie na stronie. Bez dzwonienia.”</p>
+          <b data-i18n="testi.w1">Klient usług lokalnych</b>
+        </div>
+        <div class="box quote">
+          <div class="stars" aria-hidden="true"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div>
+          <p data-i18n="testi.q2">“Mega profesjonalne. Widać, że to nie jest przypadkowy bot.”</p>
+          <b data-i18n="testi.w2">Właścicielka salonu</b>
+        </div>
+        <div class="box quote">
+          <div class="stars" aria-hidden="true"><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span></div>
+          <p data-i18n="testi.q3">“Zamiast 15 maili ‘ile kosztuje’, ludzie mają odpowiedź i konkret.”</p>
+          <b data-i18n="testi.w3">Mała firma B2C</b>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section reveal" data-reveal>
+      <div class="sectionHead">
+        <div>
+          <h2 data-i18n="faq.title">FAQ</h2>
+          <p data-i18n="faq.sub">Najczęstsze pytania, które padają na początku.</p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>
+            <span data-i18n="faq.q1">Czy asystent może umawiać terminy?</span>
+            <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke="rgba(255,255,255,.80)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <div class="faqBody" data-i18n="faq.a1">
+            Może zbierać informacje od klienta i kierować do kontaktu. Jeśli potrzebujesz pełnej rezerwacji, dobieramy rozwiązanie do Twojego procesu.
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span data-i18n="faq.q2">Czy to działa na telefonie?</span>
+            <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke="rgba(255,255,255,.80)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <div class="faqBody" data-i18n="faq.a2">Tak. Widget i strona są zoptymalizowane pod urządzenia mobilne.</div>
+        </details>
+
+        <details>
+          <summary>
+            <span data-i18n="faq.q3">Czy asystent “wymyśla” odpowiedzi?</span>
+            <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke="rgba(255,255,255,.80)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <div class="faqBody" data-i18n="faq.a3">
+            Asystent opiera się o konfigurację i wiedzę firmy. Jeśli czegoś nie ma w danych — informuje o tym i proponuje kontakt.
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span data-i18n="faq.q4">Ile trwa wdrożenie?</span>
+            <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke="rgba(255,255,255,.80)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <div class="faqBody" data-i18n="faq.a4">
+            Zwykle bardzo szybko — wszystko zależy od tego, ile informacji chcesz umieścić w asystencie i jak ma prowadzić rozmowę.
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span data-i18n="faq.q5">Czy można dopasować wygląd do strony?</span>
+            <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke="rgba(255,255,255,.80)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <div class="faqBody" data-i18n="faq.a5">
+            Tak. Kolory, styl, układ i zachowanie widgetu są konfigurowalne tak, żeby pasowały do brandu.
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="card cta reveal" data-reveal id="contact">
+      <div>
+        <h2 data-i18n="cta.title">Chcesz wersję dla swojej firmy?</h2>
+        <p data-i18n="cta.sub">
+          Napisz, jaką branżę prowadzisz i jakie pytania klienci zadają najczęściej. Odeślemy propozycję wersji demo pod Twoją stronę.
+        </p>
+      </div>
+      <div class="ctaRight">
+        <a class="mail" href="mailto:kontaktio@zohomail.eu">kontaktio@zohomail.eu</a>
+        <button class="btn primary" id="btnOpenCta" type="button" data-i18n="cta.open">Otwórz asystenta</button>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> Kontaktio</div>
+      <div class="footerLinks">
+        <a href="#demo" data-i18n="footer.try">Przetestuj asystenta</a>
+        <a href="#contact" data-i18n="footer.contact">Kontakt</a>
+      </div>
+    </footer>
+  </div>
+
+  <div class="stickyCTA" id="stickyCTA" aria-hidden="true">
+    <div>
+      <b data-i18n="sticky.title">Zróbmy demo pod Twoją firmę</b>
+      <span data-i18n="sticky.sub">Wyślij branżę + 3 najczęstsze pytania klientów. Dostaniesz wersję “wow”.</span>
+    </div>
+    <div class="right">
+      <a class="btn primary" href="mailto:kontaktio@zohomail.eu" style="text-decoration:none;">
+        <span data-i18n="sticky.mail">Napisz maila</span>
+      </a>
+      <button class="x" id="stickyClose" type="button" aria-label="Close">×</button>
+    </div>
+  </div>
 
   <script>
-    // Small enhancement: smooth scroll for hero CTA
-    document.querySelectorAll('.hero-cta').forEach(btn => {
-      btn.addEventListener('click', function(e){
-        e.preventDefault();
-        const el = document.querySelector('#industries');
-        if(el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const BACKEND_URL = "https://chatbot-backend-x2cy.onrender.com";
+    const SCRIPT_SRC = "https://cdn.jsdelivr.net/gh/kontaktio-demo/kontaktio@27625d5/kontaktio.js";
+
+    const COPY = {
+      pl: {
+        "top.tagline": "Asystenci AI dla firm",
+        "top.try": "Przejdź do demo",
+        "top.cta": "Chcę wersję dla firmy",
+
+        "hero.title": "AI asystent, który brzmi jak Twoja firma — i domyka kontakt.",
+        "hero.sub": "Ludzie wchodzą na stronę i mają te same pytania. Kontaktio odpowiada natychmiast, w Twoim stylu, na Twoich danych — i prowadzi rozmowę do konkretu: oferta, kontakt, wycena, termin.",
+        "hero.open": "Otwórz asystenta",
+        "hero.how": "Jak to działa",
+        "hero.hint": "Tip: kliknij gotowe pytanie — asystent startuje w 1 sekundę.",
+
+        "chips.1": "Odpowiedzi dopasowane do firmy",
+        "chips.2": "Dostępność 24/7",
+        "chips.3": "Spójny ton i zasady",
+        "chips.4": "Szybkie wdrożenie",
+        "chips.5": "Zero “wymyślania” faktów",
+
+        "tags.local": "lokalny",
+        "tags.general": "uniwersalny",
+        "tags.premium": "elegancki",
+
+        "buttons.open": "Otwórz asystenta",
+        "buttons.clear": "Wyczyść rozmowę",
+
+        "side.how.title": "Jak testować",
+        "side.how.body": "Kliknij ikonę czatu (prawy dół). Zapytaj o ofertę, godziny, wycenę lub “co dalej?”.",
+        "side.why.title": "Co zobaczysz w praktyce",
+        "side.why.body": "Różne firmy = różna wiedza, ton i prowadzenie rozmowy. To nie jest “uniwersalny chatbot”.",
+        "side.safe.title": "Kontrola",
+        "side.safe.body": "Asystent trzyma się danych. Gdy czegoś nie ma — pyta albo kieruje do kontaktu.",
+        "side.time.title": "Wrażenie",
+        "side.time.body": "Twoja strona zaczyna “żyć” — klient od razu wie, że trafił do ogarniętej firmy.",
+
+        "agent.amico": "Styl przyjazny i konkretny. Dobry do firm usługowych, gdzie liczy się szybka odpowiedź i kontakt.",
+        "agent.demo": "Uniwersalny styl do pokazywania możliwości. Dobry balans między szczegółem a zwięzłością.",
+        "agent.premium": "Spokojny, elegancki ton. Dla firm, które chcą bardzo dopracowanej obsługi.",
+
+        "logos.title": "Brzmi znajomo? To są realne branże.",
+        "logos.sub": "Te typy firm mają masę powtarzalnych pytań. Asystent przejmuje je natychmiast, zanim klient wyjdzie ze strony.",
+
+        "why.title": "Dlaczego ludzie mówią: “O kurczę, oni ogarniają”",
+        "why.sub": "Bo w pierwszych 20 sekundach dostają dokładnie to, czego potrzebują: odpowiedź + następny krok.",
+        "why.b1.title": "Prowadzenie rozmowy",
+        "why.b1.body": "Asystent nie “gada”. Popycha rozmowę do celu: oferta, terminy, kontakt, wycena.",
+        "why.b2.title": "Język klienta",
+        "why.b2.body": "Dostosowuje styl: krótko, konkretnie, bez IT-słówek i bez lania wody.",
+        "why.b3.title": "Uczciwość danych",
+        "why.b3.body": "Gdy czegoś nie ma w wiedzy — informuje i proponuje najlepszą ścieżkę kontaktu.",
+
+        "compare.title": "Kontaktio vs “zwykły chat”",
+        "compare.sub": "Różnica nie jest w tym, że jest AI. Różnica jest w tym, że to jest ustawione pod firmę i ma cel.",
+        "compare.h1": "Obszar",
+        "compare.h2": "Kontaktio",
+        "compare.h3": "Zwykły chatbot",
+        "compare.r1c1": "Ton i styl",
+        "compare.r1c2": "Dopasowany do marki",
+        "compare.r1c3": "Losowy / generyczny",
+        "compare.r2c1": "Wiedza",
+        "compare.r2c2": "Na Twoich danych",
+        "compare.r2c3": "“Jak mi się wydaje”",
+        "compare.r3c1": "Cel rozmowy",
+        "compare.r3c2": "Kieruje do kontaktu / oferty",
+        "compare.r3c3": "Często tylko odpowiada",
+        "compare.r4c1": "Efekt dla firmy",
+        "compare.r4c2": "Mniej straconych leadów",
+        "compare.r4c3": "Brak przewidywalności",
+
+        "benefits.title": "Co to daje firmie",
+        "benefits.sub": "To są praktyczne rzeczy, które widać w rozmowie. Zero bajek.",
+        "benefits.b1.title": "Mniej straconych zapytań",
+        "benefits.b1.body": "Klient nie czeka. Dostaje odpowiedź od razu i wie, co zrobić dalej.",
+        "benefits.b2.title": "Odciążenie zespołu",
+        "benefits.b2.body": "Powtarzalne pytania (oferta, godziny, kontakt) obsługuje asystent.",
+        "benefits.b3.title": "Spójne komunikaty",
+        "benefits.b3.body": "Jedna jakość odpowiedzi niezależnie od pory dnia, humoru czy zmiany w zespole.",
+        "benefits.b4.title": "Lepsze pierwsze wrażenie",
+        "benefits.b4.body": "To często pierwszy kontakt klienta z firmą. Liczy się szybkość i klarowność.",
+        "benefits.b5.title": "Dopasowanie do branży",
+        "benefits.b5.body": "Inna firma = inna wiedza i styl. Nie ma jednego “uniwersalnego chatbota”.",
+        "benefits.b6.title": "Łatwe aktualizacje",
+        "benefits.b6.body": "Zmiany w ofercie? Aktualizujemy konfigurację i asystent mówi aktualnymi informacjami.",
+
+        "onboarding.title": "Jak wygląda wdrożenie",
+        "onboarding.sub": "Bez technicznego gadania. Po prostu: co robimy i kiedy możesz to mieć u siebie.",
+        "onboarding.s1.title": "Krótka rozmowa",
+        "onboarding.s1.body": "Ustalamy, co ma odpowiadać asystent, jakim tonem i dokąd ma kierować klienta.",
+        "onboarding.s2.title": "Konfiguracja i test",
+        "onboarding.s2.body": "Przygotowujemy wersję dopasowaną do firmy i wysyłamy do sprawdzenia na żywo.",
+        "onboarding.s3.title": "Start",
+        "onboarding.s3.body": "Uruchamiamy asystenta na stronie i obserwujemy, jakie pytania pojawiają się najczęściej.",
+
+        "testi.title": "Jak to jest odbierane",
+        "testi.sub": "To są przykłady tego “uczucia”: klient widzi, że firma ma proces i poziom.",
+        "testi.q1": "“Pierwszy raz ktoś od razu odpowiedział mi sensownie na stronie. Bez dzwonienia.”",
+        "testi.w1": "Klient usług lokalnych",
+        "testi.q2": "“Mega profesjonalne. Widać, że to nie jest przypadkowy bot.”",
+        "testi.w2": "Właścicielka salonu",
+        "testi.q3": "“Zamiast 15 maili ‘ile kosztuje’, ludzie mają odpowiedź i konkret.”",
+        "testi.w3": "Mała firma B2C",
+
+        "faq.title": "FAQ",
+        "faq.sub": "Najczęstsze pytania, które padają na początku.",
+        "faq.q1": "Czy asystent może umawiać terminy?",
+        "faq.a1": "Może zbierać informacje od klienta i kierować do kontaktu. Jeśli potrzebujesz pełnej rezerwacji, dobieramy rozwiązanie do Twojego procesu.",
+        "faq.q2": "Czy to działa na telefonie?",
+        "faq.a2": "Tak. Widget i strona są zoptymalizowane pod urządzenia mobilne.",
+        "faq.q3": "Czy asystent “wymyśla” odpowiedzi?",
+        "faq.a3": "Asystent opiera się o konfigurację i wiedzę firmy. Jeśli czegoś nie ma w danych — informuje o tym i proponuje kontakt.",
+        "faq.q4": "Ile trwa wdrożenie?",
+        "faq.a4": "Zwykle bardzo szybko — wszystko zależy od tego, ile informacji chcesz umieścić w asystencie i jak ma prowadzić rozmowę.",
+        "faq.q5": "Czy można dopasować wygląd do strony?",
+        "faq.a5": "Tak. Kolory, styl, układ i zachowanie widgetu są konfigurowalne tak, żeby pasowały do brandu.",
+
+        "cta.title": "Chcesz wersję dla swojej firmy?",
+        "cta.sub": "Napisz, jaką branżę prowadzisz i jakie pytania klienci zadają najczęściej. Odeślemy propozycję wersji demo pod Twoją stronę.",
+        "cta.open": "Otwórz asystenta",
+
+        "footer.try": "Przetestuj asystenta",
+        "footer.contact": "Kontakt",
+
+        "sticky.title": "Zróbmy demo pod Twoją firmę",
+        "sticky.sub": "Wyślij branżę + 3 najczęstsze pytania klientów. Dostaniesz wersję “wow”.",
+        "sticky.mail": "Napisz maila"
+      },
+      en: {
+        "top.tagline": "AI assistants for businesses",
+        "top.try": "Jump to demo",
+        "top.cta": "Get a version for my business",
+
+        "hero.title": "An AI assistant that sounds like your business — and drives action.",
+        "hero.sub": "People land on your site with the same questions. Kontaktio answers instantly, in your tone, using your data — and moves the chat to a clear next step: offer, contact, quote, booking.",
+        "hero.open": "Open the assistant",
+        "hero.how": "How it works",
+        "hero.hint": "Tip: click a ready prompt — the assistant starts in 1 second.",
+
+        "chips.1": "Company‑specific answers",
+        "chips.2": "Available 24/7",
+        "chips.3": "Consistent tone & rules",
+        "chips.4": "Fast setup",
+        "chips.5": "No made‑up facts",
+
+        "tags.local": "local",
+        "tags.general": "general",
+        "tags.premium": "premium",
+
+        "buttons.open": "Open the assistant",
+        "buttons.clear": "Clear chat",
+
+        "side.how.title": "How to test",
+        "side.how.body": "Click the chat icon (bottom-right). Ask about the offer, hours, price or “what next?”.",
+        "side.why.title": "What you’ll see",
+        "side.why.body": "Different companies = different knowledge, tone and flow. Not a generic bot.",
+        "side.safe.title": "Control",
+        "side.safe.body": "It sticks to data. If something is missing, it asks or routes to contact.",
+        "side.time.title": "The feel",
+        "side.time.body": "Your website starts to ‘respond’ — visitors instantly sense professionalism.",
+
+        "agent.amico": "Friendly and direct. Great for local services where speed and clarity matter.",
+        "agent.demo": "Balanced and universal to showcase capabilities. Detailed but still concise.",
+        "agent.premium": "Calm, elegant tone. For brands that want a refined experience.",
+
+        "logos.title": "Recognize this? These are real industries.",
+        "logos.sub": "They get the same repetitive questions. The assistant handles them instantly before visitors leave.",
+
+        "why.title": "Why people think: “They know what they’re doing”",
+        "why.sub": "Because in the first 20 seconds they get an answer + a next step.",
+        "why.b1.title": "Conversation guidance",
+        "why.b1.body": "It doesn’t just chat. It moves toward outcomes: offer, booking, contact, quote.",
+        "why.b2.title": "Customer language",
+        "why.b2.body": "Clear, non-technical, no fluff — feels like a competent human response.",
+        "why.b3.title": "Honest data behavior",
+        "why.b3.body": "If knowledge is missing, it says so and routes to the best contact step.",
+
+        "compare.title": "Kontaktio vs a generic chat",
+        "compare.sub": "The difference isn’t ‘AI’. The difference is being configured for your business with a goal.",
+        "compare.h1": "Area",
+        "compare.h2": "Kontaktio",
+        "compare.h3": "Generic chatbot",
+        "compare.r1c1": "Tone & style",
+        "compare.r1c2": "Brand‑matched",
+        "compare.r1c3": "Random / generic",
+        "compare.r2c1": "Knowledge",
+        "compare.r2c2": "Your data",
+        "compare.r2c3": "Guesswork",
+        "compare.r3c1": "Conversation goal",
+        "compare.r3c2": "Routes to action",
+        "compare.r3c3": "Often just answers",
+        "compare.r4c1": "Business outcome",
+        "compare.r4c2": "Fewer lost leads",
+        "compare.r4c3": "Unpredictable",
+
+        "benefits.title": "What it gives a business",
+        "benefits.sub": "Practical benefits you can see in real chats.",
+        "benefits.b1.title": "Fewer lost inquiries",
+        "benefits.b1.body": "No waiting. Visitors get answers immediately and know what to do next.",
+        "benefits.b2.title": "Less load on the team",
+        "benefits.b2.body": "Repeating questions (offer, hours, contact) are handled by the assistant.",
+        "benefits.b3.title": "Consistent messaging",
+        "benefits.b3.body": "Same quality regardless of time, mood or who’s working.",
+        "benefits.b4.title": "Better first impression",
+        "benefits.b4.body": "Often the first touchpoint. Speed and clarity matter.",
+        "benefits.b5.title": "Industry‑specific setup",
+        "benefits.b5.body": "Different business = different knowledge and tone. No one universal bot.",
+        "benefits.b6.title": "Easy updates",
+        "benefits.b6.body": "Offer changes? Update config and the assistant stays current.",
+
+        "onboarding.title": "How onboarding works",
+        "onboarding.sub": "No technical talk. Just what happens and when it goes live.",
+        "onboarding.s1.title": "Short call",
+        "onboarding.s1.body": "We define what it should answer, the tone, and where it should route customers.",
+        "onboarding.s2.title": "Setup & live test",
+        "onboarding.s2.body": "We prepare a tailored version and send it for a live check.",
+        "onboarding.s3.title": "Go live",
+        "onboarding.s3.body": "We launch it and watch which questions appear most often.",
+
+        "testi.title": "How it feels to users",
+        "testi.sub": "Examples of that ‘wow’ feeling: people sense competence and process.",
+        "testi.q1": "“First time a website answered me properly. No calling.”",
+        "testi.w1": "Local services customer",
+        "testi.q2": "“Super professional. Clearly not a random bot.”",
+        "testi.w2": "Salon owner",
+        "testi.q3": "“Instead of 15 emails ‘how much’, people get clarity and next steps.”",
+        "testi.w3": "Small B2C business",
+
+        "faq.title": "FAQ",
+        "faq.sub": "Questions we hear most often.",
+        "faq.q1": "Can it book appointments?",
+        "faq.a1": "It can collect details and route to contact. For full booking we match it to your process.",
+        "faq.q2": "Does it work on mobile?",
+        "faq.a2": "Yes. The widget and page are optimized for mobile.",
+        "faq.q3": "Does it make things up?",
+        "faq.a3": "It relies on company configuration and knowledge. If something is missing, it says so and routes to contact.",
+        "faq.q4": "How long does setup take?",
+        "faq.a4": "Usually very fast — depends on how much info you want included and how it should guide the chat.",
+        "faq.q5": "Can it match our website design?",
+        "faq.a5": "Yes. Colors, layout and behavior are configurable to fit branding.",
+
+        "cta.title": "Want a version for your business?",
+        "cta.sub": "Tell us your industry and the top customer questions. We’ll send a tailored demo proposal.",
+        "cta.open": "Open the assistant",
+
+        "footer.try": "Try the assistant",
+        "footer.contact": "Contact",
+
+        "sticky.title": "Let’s build a demo for your business",
+        "sticky.sub": "Send your industry + 3 common questions. You’ll get a wow version.",
+        "sticky.mail": "Send email"
+      }
+    };
+
+    const AGENTS = {
+      amico:   { pl: {title:"Amico",   descKey:"agent.amico"},   en: {title:"Amico",   descKey:"agent.amico"} },
+      demo:    { pl: {title:"Demo",    descKey:"agent.demo"},    en: {title:"Demo",    descKey:"agent.demo"} },
+      premium: { pl: {title:"Premium", descKey:"agent.premium"}, en: {title:"Premium", descKey:"agent.premium"} }
+    };
+
+    const WOW = {
+      amico:   { a1: "#10b981", a2: "#22d3ee" },
+      demo:    { a1: "#2563eb", a2: "#7c3aed" },
+      premium: { a1: "#f59e0b", a2: "#10b981" }
+    };
+
+    const PROMPTS = {
+      pl: {
+        amico: {
+          offer: "Czym się zajmujecie i jaka jest oferta?",
+          price: "Jaki jest orientacyjny koszt i od czego zależy?",
+          hours: "W jakich godzinach pracujecie i jak umówić kontakt?",
+          contact: "Jak najszybciej mogę się skontaktować?",
+          next: "Czy pracujecie na materiałach klienta?"
+        },
+        demo: {
+          offer: "Co potrafi asystent i co może obsługiwać?",
+          price: "Jak wygląda wdrożenie i ile to kosztuje?",
+          hours: "Jakie branże najlepiej konwertują?",
+          contact: "Jak szybko można uruchomić demo pod firmę?",
+          next: "Jak wygląda proces: od rozmowy do uruchomienia?"
+        },
+        premium: {
+          offer: "Jak wygląda obsługa klienta przez asystenta?",
+          price: "Jakie są opcje wersji premium i co zawiera?",
+          hours: "Jak dbacie o spójność odpowiedzi i brand?",
+          contact: "Jak umówić krótką rozmowę i dostać demo?",
+          next: "Jakie pytania mam przygotować do wdrożenia?"
+        }
+      },
+      en: {
+        amico: {
+          offer: "What do you offer and how does it work?",
+          price: "What’s the estimated price and what affects it?",
+          hours: "What are your opening hours and how do I contact you?",
+          contact: "What’s the fastest way to reach you?",
+          next: "Do you work with client materials?"
+        },
+        demo: {
+          offer: "What can the assistant handle in real life?",
+          price: "How does onboarding look and what does it cost?",
+          hours: "Which industries convert best?",
+          contact: "How fast can you launch a business demo?",
+          next: "What’s the process from call to launch?"
+        },
+        premium: {
+          offer: "How does premium customer experience work here?",
+          price: "What premium options exist and what’s included?",
+          hours: "How do you keep brand tone consistent?",
+          contact: "How can I book a short call and get a demo?",
+          next: "What questions should I prepare for onboarding?"
+        }
+      }
+    };
+
+    let currentScript = null;
+    let currentClientId = "amico";
+    let lang = "pl";
+
+    const $ = (id) => document.getElementById(id);
+    function t(key){ return (COPY[lang] && COPY[lang][key]) ? COPY[lang][key] : key; }
+
+    function applyI18n(){
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        node.textContent = t(key);
       });
+      setAgentMeta(currentClientId);
+      rebuildPromptButtons();
+    }
+
+    function setLang(next){
+      lang = next;
+      $("langPL").classList.toggle("active", lang === "pl");
+      $("langEN").classList.toggle("active", lang === "en");
+      applyI18n();
+      requestAnimationFrame(movePillToActive);
+    }
+
+    function setAgentMeta(clientId){
+      const meta = AGENTS[clientId] || AGENTS.amico;
+      $("agentTitle").textContent = meta[lang]?.title || clientId;
+      const descKey = meta[lang]?.descKey || "agent.amico";
+      $("agentDesc").textContent = t(descKey);
+    }
+
+    function applyWowThemeVars(clientId){
+      const theme = WOW[clientId] || WOW.demo;
+      document.documentElement.style.setProperty("--k-accent", theme.a1);
+      document.documentElement.style.setProperty("--k-accent2", theme.a2);
+    }
+
+    function resetKontaktio(){
+      document.querySelectorAll("[id^='kontaktio-root']").forEach(el => el.remove());
+      if (currentScript) currentScript.remove();
+      window.__KontaktioBooted = false;
+    }
+
+    function loadAgent(clientId){
+      currentClientId = clientId;
+      applyWowThemeVars(clientId);
+      rebuildPromptButtons();
+
+      resetKontaktio();
+
+      const script = document.createElement("script");
+      script.src = SCRIPT_SRC;
+      script.setAttribute("data-kontaktio", "");
+      script.setAttribute("data-client", clientId);
+      script.setAttribute("data-backend", BACKEND_URL);
+      document.body.appendChild(script);
+      currentScript = script;
+    }
+
+    function movePillToActive(){
+      const tabs = $("tabs");
+      const pill = $("pill");
+      const active = tabs.querySelector("button.active");
+      if (!active) return;
+
+      const tabsRect = tabs.getBoundingClientRect();
+      const aRect = active.getBoundingClientRect();
+      const x = aRect.left - tabsRect.left;
+
+      pill.style.width = aRect.width + "px";
+      pill.style.transform = `translate3d(${x}px, 0, 0)`;
+    }
+
+    function setActiveButton(btn){
+      document.querySelectorAll("#tabs button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      movePillToActive();
+
+      const clientId = btn.dataset.client;
+      setAgentMeta(clientId);
+      loadAgent(clientId);
+    }
+
+    function clearHistoryFor(clientId){
+      try{
+        localStorage.removeItem(`kontaktio-history-${clientId}`);
+        localStorage.removeItem(`kontaktio-session-${clientId}`);
+        localStorage.removeItem(`kontaktio-open-${clientId}`);
+      }catch{}
+    }
+
+    function openAssistant(){
+      try { localStorage.setItem(`kontaktio-open-${currentClientId}`, "1"); } catch {}
+      loadAgent(currentClientId);
+    }
+
+    function rebuildPromptButtons(){
+      const row = $("promptRow");
+      if (!row) return;
+      const dict = (PROMPTS[lang] && PROMPTS[lang][currentClientId]) ? PROMPTS[lang][currentClientId] : PROMPTS.pl.amico;
+
+      row.querySelectorAll("[data-prompt]").forEach(btn => {
+        const key = btn.getAttribute("data-prompt");
+        btn.textContent = dict[key] || btn.textContent;
+      });
+    }
+
+    function tryPrefillAndSend(text){
+      const input = document.querySelector(".kontaktio-input");
+      if (!input) {
+        try { navigator.clipboard.writeText(text); } catch {}
+        return;
+      }
+      input.focus();
+      input.value = text;
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+
+      const send = document.querySelector(".kontaktio-send");
+      if (send) send.click();
+    }
+
+    function jumpToDemo(){
+      document.querySelector("#demo")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      setTimeout(() => openAssistant(), 520);
+    }
+
+    (function reveal(){
+      const items = Array.from(document.querySelectorAll("[data-reveal]"));
+      if (!items.length) return;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("on"); });
+      }, { threshold: 0.12 });
+      items.forEach(el => io.observe(el));
+    })();
+
+    (function initGlow(){
+      const glow = $("glow");
+      if (!glow) return;
+      if (!window.matchMedia("(hover:hover)").matches) return;
+
+      let raf = null;
+      let x = -9999, y = -9999;
+      function onMove(e){
+        x = e.clientX - 390;
+        y = e.clientY - 390;
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          glow.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+          raf = null;
+        });
+      }
+      window.addEventListener("mousemove", onMove, { passive: true });
+    })();
+
+    (function sticky(){
+      const bar = $("stickyCTA");
+      const close = $("stickyClose");
+      if (!bar || !close) return;
+
+      const key = "kontaktio_sticky_closed";
+      const closed = (() => { try { return localStorage.getItem(key) === "1"; } catch { return false; } })();
+      if (closed) return;
+
+      function onScroll(){
+        const y = window.scrollY || 0;
+        if (y > 850) bar.classList.add("on");
+        else bar.classList.remove("on");
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      close.addEventListener("click", () => {
+        bar.classList.remove("on");
+        try { localStorage.setItem(key, "1"); } catch {}
+      });
+    })();
+
+    $("btnClear").addEventListener("click", () => {
+      clearHistoryFor(currentClientId);
+      loadAgent(currentClientId);
+
+      const b = $("btnClear");
+      const old = b.textContent;
+      b.textContent = (lang === "pl") ? "Wyczyszczono" : "Cleared";
+      setTimeout(() => (b.textContent = old), 900);
     });
+
+    $("btnOpen").addEventListener("click", openAssistant);
+    $("btnOpenHero").addEventListener("click", openAssistant);
+    $("btnOpenCta").addEventListener("click", openAssistant);
+
+    $("btnScrollHow").addEventListener("click", () => {
+      document.querySelector("#how")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    $("btnJumpDemo").addEventListener("click", jumpToDemo);
+
+    $("promptRow").addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-prompt]");
+      if (!btn) return;
+
+      const key = btn.getAttribute("data-prompt");
+      const dict = (PROMPTS[lang] && PROMPTS[lang][currentClientId]) ? PROMPTS[lang][currentClientId] : PROMPTS.pl.amico;
+      const text = dict[key] || btn.textContent;
+
+      openAssistant();
+      setTimeout(() => tryPrefillAndSend(text), 700);
+    });
+
+    $("langPL").addEventListener("click", () => setLang("pl"));
+    $("langEN").addEventListener("click", () => setLang("en"));
+
+    document.querySelectorAll("#tabs button").forEach(btn => btn.addEventListener("click", () => setActiveButton(btn)));
+    window.addEventListener("resize", movePillToActive, { passive: true });
+
+    window.addEventListener("keydown", (e) => {
+      const isMac = navigator.platform.toLowerCase().includes("mac");
+      const combo = isMac ? e.metaKey : e.ctrlKey;
+      if (combo && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        jumpToDemo();
+      }
+    });
+
+    $("year").textContent = String(new Date().getFullYear());
+
+    setLang("pl");
+    setAgentMeta("amico");
+    applyWowThemeVars("amico");
+    requestAnimationFrame(movePillToActive);
+    rebuildPromptButtons();
+    loadAgent("amico");
   </script>
 </body>
 </html>
